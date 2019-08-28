@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    user_img: 'http://i0.sinaimg.cn/dy/o/2009-09-29/1254240031_5ZY0oP.jpg',
+    user_name: '测试',
   },
 
   /**

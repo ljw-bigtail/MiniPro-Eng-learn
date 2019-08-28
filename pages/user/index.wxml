@@ -1,2 +1,17 @@
 <!--pages/user/index.wxml-->
-<text>pages/user/index.wxml</text>
+
+<view class="container">
+  <view class="user">
+    <image class="" src="{{user_img}}"></image>
+    <text>{{user_name}}</text>
+  </view>
+  <view class="opt">
+    <van-cell-group>
+      <van-cell is-link title="学币" link-type="navigateTo" url="/pages/cash/index" />
+      <van-cell is-link title="学族" link-type="navigateTo" url="/pages/tree/index" />
+    </van-cell-group>
+    <view class="btn">
+      <van-button type="primary" size="large" round color="rgb(255, 46, 99)">退出</van-button>
+    </view>
+  </view>
+</view>

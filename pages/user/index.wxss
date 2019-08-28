@@ -1,1 +1,6 @@
 /* pages/user/index.wxss */
+/* .container{background: #f8f8f8} */
+.user{display: flex; align-items: center; justify-content: flex-start}
+.user image{width: 160rpx; height: 160rpx; border-radius: 50%; overflow: hidden;margin: 40rpx}
+
+.btn{padding: 60rpx 15%;background: #fff}
