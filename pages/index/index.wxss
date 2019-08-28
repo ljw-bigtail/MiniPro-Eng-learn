@@ -1,0 +1,10 @@
+/**index.wxss**/
+.swiper swiper{width: 100%;}
+.swiper swiper navigator{width: 100%; height: 100%}
+.swiper swiper image{width: 100%; height: 100%}
+
+.ul{background: #fff;color: #252a34;padding: 0 40rpx}
+.ul .li{padding: 32rpx 0;}
+.ul .li navigator > view:nth-child(1){font-size: 24rpx; line-height: 24rpx; padding: 0 20rpx; min-width: 64rpx;overflow: hidden}
+.ul .li navigator > view:nth-child(2){flex: 1; font-size: 32rpx; line-height: 32rpx}
+.ul .li navigator > view:nth-child(3){height: 40rpx;}

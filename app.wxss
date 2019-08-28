@@ -1,0 +1,8 @@
+/**app.wxss**/
+@import "/dist/common/index.wxss";
+
+.ul{display: block}
+.ul .li,
+.ul .li > navigator{display: flex; align-items: center; justify-content: space-between; width: 100%}
+
+navigator.navigator-hover{background: transparent}
