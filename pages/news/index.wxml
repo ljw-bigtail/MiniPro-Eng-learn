@@ -1,0 +1,10 @@
+<!--pages/news/index.wxml-->
+<view class='container'>
+  <view class='title van-hairline--bottom'>
+    <text>{{title}}</text>
+    <text>{{author}} {{date}}</text>
+  </view>
+  <view class='content'>
+    <rich-text nodes="{{richText}}"></rich-text>
+  </view>
+</view>

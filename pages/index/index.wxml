@@ -4,7 +4,7 @@
     <swiper bindchange="bindchange" style="height:{{imgheights[current]}}rpx;" circular="{{circular}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorColorActive}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{bannerList}}" wx:key="index">
         <swiper-item>
-          <navigator url="/page/news/index?id={{item.detailId}}">
+          <navigator url="/pages/news/index?id={{item.detailId}}">
             <image src="{{item.img}}" data-id='{{index}}' class="slide-image" bindload="imageLoad"/>
           </navigator> 
         </swiper-item>
@@ -15,23 +15,25 @@
     <van-tab title="经典歌曲">
       <view class="ul musicList">
         <view class="li van-hairline--bottom" wx:for="{{songsList}}" wx:key="index">
-          <navigator url="/page/songs/index?id={{item.id}}">
+          <navigator url="/pages/songs/index?id={{item.id}}">
             <view class="van-ellipsis">{{index + 1}}</view>
             <view class="van-ellipsis">{{item.name}}</view>
             <view><van-icon name="music-o" size="20px"/></view>
           </navigator> 
         </view>
+        <view class="li tips">已经到最底部了···</view>
       </view>
     </van-tab>
     <van-tab title="新闻动态">
      <view class="ul newsList">
         <view class="li van-hairline--bottom" wx:for="{{newsList}}" wx:key="index">
-          <navigator url="/page/songs/index?id={{item.id}}">
+          <navigator url="/pages/news/index?id={{item.id}}">
             <view class="van-ellipsis">{{index + 1}}</view>
             <view class="van-ellipsis">{{item.name}}</view>
             <view><van-icon name="arrow" size="20px"/></view>
           </navigator> 
         </view>
+        <view class="li tips">已经到最底部了···</view>
       </view>
     </van-tab>
   </van-tabs>

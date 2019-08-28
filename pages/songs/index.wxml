@@ -1,0 +1,27 @@
+<!--pages/songs/index.wxml-->
+<view class='container'>
+  <view class='title van-hairline--bottom'>
+    <text>{{music_title}}</text>
+    <text>{{music_desc}}</text>
+  </view>
+  <view class='content'>
+    <view class='center'>
+      <image src='/img/music-cd.jpg' class='animateRound {{!music_state ? "" : "animatePaused"}}' mode='widthFix'></image>
+    </view>
+    <van-progress class='progress' color="rgb(255, 46, 99)" percentage="25" />
+    <view class='bottom btn_box'>
+      <view class='btn'>
+        <van-icon name="arrow-left" size='42px'/>
+      </view>
+      <view class='btn big' hidden='{{!music_state}}' bindtap='clickPlay'>
+        <van-icon name="play-circle-o" size='64px'/>
+      </view>
+      <view class='btn big' hidden='{{music_state}}' bindtap='clickPlay'>
+        <van-icon name="pause-circle-o" size='64px'/>
+      </view>
+      <view class='btn'>
+        <van-icon name="arrow" size='42px'/>
+      </view>
+    </view>
+  </view>  
+</view>

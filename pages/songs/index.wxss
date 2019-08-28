@@ -1,0 +1,25 @@
+/* pages/songs/index.wxss */
+
+.container{height: 100vh; overflow: hidden; display: flex; flex-direction: column;}
+.title{margin-left: 40rpx; padding: 32rpx 40rpx 32rpx 0;}
+.title text{display: block; line-height: 36rpx;}
+.title text:first-child{font-size: 32rpx; padding-bottom: 20rpx; color: #252a34}
+.title text:last-child{font-size: 28rpx;color: #999}
+
+.content{flex: 1;display: flex; flex-direction: column;padding-bottom: 40rpx}
+.center{display: flex; align-items: center; justify-content: center; flex: 1;padding-bottom: 40rpx}
+.center image{width: 400rpx; height: 400rpx; border-radius: 50%; overflow: hidden;}
+
+.progress{margin: 0 16%}
+
+.bottom{height: 180rpx; display: flex; align-items: center; justify-content: space-between; padding: 40rpx}
+.btn_box{display: flex;align-items: center; justify-content: center}
+.btn_box .btn.big{padding: 0 40rpx}
+
+
+@keyframes round{
+  from {transform: rotate(0);}
+  to {transform: rotate(360deg);}
+}
+.animateRound{animation: round 2.8s infinite linear; animation-play-state: running}
+.animatePaused{animation-play-state: paused}

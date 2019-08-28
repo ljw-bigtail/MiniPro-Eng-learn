@@ -1,0 +1,6 @@
+/* pages/news/index.wxss */
+.content{padding: 20rpx; overflow-x: hidden}
+.title{margin: 20rpx; text-align: center; margin-bottom: 0}
+.title text{display: block;}
+.title text:first-child{font-size: 48rpx; line-height: 60rpx}
+.title text:last-child{font-size: 24rpx;padding: 20rpx 0}

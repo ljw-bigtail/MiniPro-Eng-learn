@@ -6,13 +6,13 @@ Page({
   data: {
     bannerList: [{
       detailId: '0',
-      img: 'https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg'
+      img: 'http://www.iyzjj.com/templates/jmw/images/banner.jpg'
     }, {
       detailId: '0',
-      img: 'https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg'
+      img: 'http://www.iyzjj.com/templates/jmw/images/banner.jpg'
     }, {
       detailId: '0',
-      img: 'https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg'
+      img: 'http://www.iyzjj.com/templates/jmw/images/banner.jpg'
     }],
     imgheights: [],
     current: 0,
