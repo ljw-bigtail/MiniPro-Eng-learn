@@ -14,6 +14,17 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+let tools = {
+  tabbarNavTo: function(index){
+    switch(index){
+      case 0: wx.reLaunch({ url: '/pages/index/index' }); break;
+      case 1: wx.reLaunch({ url: '/pages/study/index' }); break;
+      case 2: wx.reLaunch({ url: '/pages/user/index'}) ;break;
+    }
+  },
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  tools: tools
 }

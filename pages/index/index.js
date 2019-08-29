@@ -4,6 +4,7 @@ const app = getApp()
 
 Page({
   data: {
+    active: 0,
     bannerList: [{
       detailId: '0',
       img: 'http://www.iyzjj.com/templates/jmw/images/banner.jpg'
@@ -32,7 +33,7 @@ Page({
     interval: 2000,
     //滑动动画时长毫秒  
     duration: 300,
-    active: 0,
+    tab_active: 0,
     songsList: [
       {
         id: '1',
@@ -141,7 +142,7 @@ Page({
   onChange: function(e){
     console.log(e.detail.index)
   },
-  onpenSong: function(e){
-    console.log(e)
+  openTabbar: function (e) {
+    app.tabbarNavTo(e.detail)
   },
 })

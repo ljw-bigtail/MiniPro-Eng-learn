@@ -1,33 +1,13 @@
-// pages/study/index.js
-const app = getApp()
-
+// pages/study/set.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    active: 1,
-    tab_active: 0,
-    book: {
-      grade: '一年级', // 年级
-      textbook: '人教版（上）', // 教材
-      unit: '第一单元' // 单元
-    }
+
   },
-  openTabbar: function (e) {
-    app.tabbarNavTo(e.detail)
-  },
-  openBookSet: function(){
-    wx.navigateTo({
-      url: '/pages/study/book',
-    })
-  },
-  openBook: function () {
-    wx.navigateTo({
-      url: '/pages/study/set',
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

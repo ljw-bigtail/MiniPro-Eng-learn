@@ -1,2 +1,25 @@
 <!--pages/study/index.wxml-->
-<text>pages/study/index.wxml</text>
+<view class="container">
+  <van-tabs active="{{ tab_active }}" bind:change="onChange" animated swipeable color="rgb(255, 46, 99)">
+    <van-tab title="学习教材">
+      <view class='btnBox'>
+        <view class='btn' bindtap='openBook'>
+          <text>去学习</text>
+        </view>
+        <view class='tip van-multi-ellipsis--l2'>{{book.grade}} - {{book.textbook}} - {{book.unit}}</view>
+        <view class='btn light' bindtap='openBookSet'>
+          <text>换教材</text>
+        </view>
+      </view>
+    </van-tab>
+    <van-tab title="学习商城">
+      <text>待开发</text>
+    </van-tab>
+  </van-tabs>
+
+  <van-tabbar active="{{ active }}" bind:change="openTabbar" active-color="rgb(255, 46, 99)">
+    <van-tabbar-item icon="home-o">首页</van-tabbar-item>
+    <van-tabbar-item icon="newspaper-o">学习中心</van-tabbar-item>
+    <van-tabbar-item icon="manager-o">我的</van-tabbar-item>
+  </van-tabbar>
+</view>

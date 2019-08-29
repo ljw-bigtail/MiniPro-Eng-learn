@@ -4,37 +4,15 @@
     "pages/news/index",
     "pages/songs/index",
     "pages/study/index",
-    "pages/user/index"
+    "pages/user/index",
+    "pages/study/book",
+    "pages/study/set"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "color": "#BFBFBF",
-    "selectedColor": "#252a34",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "iconPath": "img/home-0.png",
-        "selectedIconPath": "img/home-0.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/study/index",
-        "iconPath": "img/study-0.png",
-        "selectedIconPath": "img/study-1.png",
-        "text": "学习中心"
-      },
-      {
-        "pagePath": "pages/user/index",
-        "iconPath": "img/user-0.png",
-        "selectedIconPath": "img/user-1.png",
-        "text": "我的"
-      }
-    ]
   },
   "sitemapLocation": "sitemap.json"
 }

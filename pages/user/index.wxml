@@ -14,4 +14,9 @@
       <van-button type="primary" size="large" round color="rgb(255, 46, 99)">退出</van-button>
     </view>
   </view>
+  <van-tabbar active="{{ active }}" bind:change="openTabbar" active-color="rgb(255, 46, 99)">
+    <van-tabbar-item icon="home-o">首页</van-tabbar-item>
+    <van-tabbar-item icon="newspaper-o">学习中心</van-tabbar-item>
+    <van-tabbar-item icon="manager-o">我的</van-tabbar-item>
+  </van-tabbar>
 </view>
