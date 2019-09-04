@@ -21,7 +21,13 @@ Page({
     })
   },
   login: function () {
-    
+    wx.login({
+      success: function(res) {
+        console.log(res)
+      },
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   },
   logout: function(){
 
@@ -31,7 +37,35 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const _this = this
+    
+    app.globalData.userInfo = wx.getStorageSync('userInfo') || {}
+    if (app.globalData.userInfo && app.globalData.userInfo.nickName && app.globalData.userInfo.avatarUrl){
+      _this.setData({ user_img: app.globalData.userInfo.avatarUrl })
+      _this.setData({ user_name: app.globalData.userInfo.nickName })
+      _this.setData({ isLogin: true })
+    }else{
+      wx.getSetting({
+        success: res => {
+          let state = res.authSetting['scope.userInfo']
+          if (state) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            wx.getUserInfo({
+              success: res => {
+                // 可以将 res 发送给后台解码出 unionId
+                app.globalData.userInfo = res.userInfo
+                wx.setStorageSync('userInfo', res.userInfo)
+                _this.setData({ user_img: app.globalData.userInfo.avatarUrl })
+                _this.setData({ user_name: app.globalData.userInfo.nickName })
+              },
+              complete: ()=>{
+                _this.setData({ isLogin: state})
+              }
+            })
+          }
+        }
+      })
+    }
   },
 
   /**

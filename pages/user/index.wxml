@@ -11,8 +11,8 @@
       <van-cell is-link title="学族" bind:click="openUrl" data-url="/pages/tree/index"/>
     </van-cell-group>
     <view class="btn">
-      <van-button wx:if="{{isLogin}}" plain size="large" round color="rgb(255, 46, 99)" bindtap='logout'>退出</van-button>
-      <van-button wx:else size="large" round color="rgb(255, 46, 99)" bindtap='login'>登录</van-button>
+      <van-button wx:if="{{!isLogin}}" size="large" round color="rgb(255, 46, 99)" bindtap='login'>登录</van-button>
+      <!-- <van-button wx:else plain size="large" round color="rgb(255, 46, 99)" bindtap='logout'>退出</van-button> -->
     </view>
   </view>
   
