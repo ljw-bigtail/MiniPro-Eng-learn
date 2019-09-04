@@ -7,3 +7,7 @@
 .btnBox .btn.light{color: rgb(255, 46, 99); background: #fff;}
 
 .btnBox .tip{font-size: 24rpx; line-height: 36rpx; margin-top: -80rpx; color: #252a34; margin-left: 40rpx;margin-right: 40rpx;}
+
+.scroll{max-height: 60vh; overflow-y: auto}
+.title{padding: 32rpx 10rpx; text-align: center;display: block;}
+.value-class {flex: none !important;}

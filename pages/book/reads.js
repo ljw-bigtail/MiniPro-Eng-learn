@@ -1,32 +1,13 @@
-// pages/user/index.js
-const app = getApp()
-
+// pages/book/reads.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    isLogin: false,
-    user_img: 'http://i0.sinaimg.cn/dy/o/2009-09-29/1254240031_5ZY0oP.jpg',
-    user_name: '测试',
-    active: 2,
-  },
-  openTabbar: function (e) {
-    app.tabbarNavTo(e.detail)
-  },
-  openUrl: function (event){
-    wx.navigateTo({
-      url: event.currentTarget.dataset.url,
-    })
-  },
-  login: function () {
-    
-  },
-  logout: function(){
 
   },
-  
+
   /**
    * 生命周期函数--监听页面加载
    */

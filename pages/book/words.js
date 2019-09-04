@@ -1,4 +1,4 @@
-// pages/study/set.js
+// pages/book/words.js
 Page({
 
   /**

@@ -17,6 +17,60 @@
     </van-tab>
   </van-tabs>
 
+  <van-popup show="{{ popShow }}" position="bottom" bind:close="onClose">
+    <view wx:if="{{state == 0}}" class='scroll'>
+      <text class='title'>请选择年级</text>
+      <van-radio-group value="{{ gradeRadio }}" bind:change="gradeChange">
+        <van-cell-group>
+          <van-cell
+            title="{{item.val}}"
+            value-class="value-class"
+            clickable
+            data-name="{{item.val}}"
+            bind:click="gradeClick"
+            wx:for="{{grade}}" wx:key="{{index}}" 
+          >
+            <van-radio name="{{item.val}}" />
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </view>
+    <view wx:if="{{state == 1}}" class='scroll'>
+      <text class='title'>请选择教材</text>
+      <van-radio-group value="{{ textbookRadio }}" bind:change="textbookChange">
+        <van-cell-group>
+          <van-cell
+            title="{{item.val}}"
+            value-class="value-class"
+            clickable
+            data-name="{{item.val}}"
+            bind:click="textbookClick"
+            wx:for="{{textbook}}" wx:key="{{index}}" 
+          >
+            <van-radio name="{{item.val}}" />
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </view>
+    <view wx:if="{{state == 2}}" class='scroll'>
+      <text class='title'>请选择单元</text>
+      <van-radio-group value="{{ unitRadio }}" bind:change="unitChange">
+        <van-cell-group>
+          <van-cell
+            title="{{item.val}}"
+            value-class="value-class"
+            clickable
+            data-name="{{item.val}}"
+            bind:click="unitClick"
+            wx:for="{{unit}}" wx:key="{{index}}" 
+          >
+            <van-radio name="{{item.val}}" />
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </view>
+  </van-popup>
+
   <van-tabbar active="{{ active }}" bind:change="openTabbar" active-color="rgb(255, 46, 99)">
     <van-tabbar-item icon="home-o">首页</van-tabbar-item>
     <van-tabbar-item icon="newspaper-o">学习中心</van-tabbar-item>

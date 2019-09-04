@@ -5,7 +5,73 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    tab_active: 0,
+    readList: [
+      {
+        id: '1',
+        name: 'teacher',
+      }, {
+        id: '2',
+        name: 'moon ',
+      }, {
+        id: '3',
+        name: ' river3',
+      }, {
+        id: '1',
+        name: 'moon ',
+      }, {
+        id: '2',
+        name: ' river1',
+      }, {
+        id: '3',
+        name: 'moon ',
+      }, {
+        id: '3',
+        name: ' river3',
+      }, {
+        id: '1',
+        name: ' river',
+      }, {
+        id: '2',
+        name: 'moon ',
+      }, {
+        id: '3',
+        name: ' river3',
+      }
+    ],
+    wordList: [
+      {
+        id: '1',
+        name: 'teacher',
+      }, {
+        id: '2',
+        name: 'moon ',
+      }, {
+        id: '3',
+        name: ' river3',
+      }, {
+        id: '1',
+        name: 'moon ',
+      }, {
+        id: '2',
+        name: ' river1',
+      }, {
+        id: '3',
+        name: 'moon ',
+      }, {
+        id: '3',
+        name: ' river3',
+      }, {
+        id: '1',
+        name: ' river',
+      }, {
+        id: '2',
+        name: 'moon ',
+      }, {
+        id: '3',
+        name: ' river3',
+      }
+    ],
   },
 
   /**

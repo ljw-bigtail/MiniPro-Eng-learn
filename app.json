@@ -6,7 +6,8 @@
     "pages/study/index",
     "pages/user/index",
     "pages/study/book",
-    "pages/study/set"
+    "pages/book/words",
+    "pages/book/reads"
   ],
   "window": {
     "backgroundTextStyle": "light",
