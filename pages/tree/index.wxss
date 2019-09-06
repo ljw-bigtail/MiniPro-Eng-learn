@@ -1,0 +1,2 @@
+/* pages/tree/index.wxss */
+.btn{width: 70%; margin: 60rpx auto}

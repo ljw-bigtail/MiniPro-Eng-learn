@@ -2,6 +2,7 @@
 import Tools from './utils/util.js'
 
 App({
+  tools: Tools.tools,
   onLaunch: function () {
     this.globalData.userInfo = wx.getStorageSync('userInfo')
   },
@@ -9,6 +10,8 @@ App({
     Tools.tools.tabbarNavTo(index)
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    baseUrl: Tools.tools.baseUrl,
+    sessionid: null,
   }
 })

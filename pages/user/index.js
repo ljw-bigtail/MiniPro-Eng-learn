@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isLogin: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+
     user_img: 'http://i0.sinaimg.cn/dy/o/2009-09-29/1254240031_5ZY0oP.jpg',
     user_name: '测试',
     active: 2,
@@ -20,17 +21,10 @@ Page({
       url: event.currentTarget.dataset.url,
     })
   },
-  login: function () {
-    wx.login({
-      success: function(res) {
-        console.log(res)
-      },
-      fail: function(res) {},
-      complete: function(res) {},
+  bindGetUserInfo: function () {
+    app.tools.isLogin(function () {
+      console.log(1)
     })
-  },
-  logout: function(){
-
   },
   
   /**
@@ -38,34 +32,29 @@ Page({
    */
   onLoad: function (options) {
     const _this = this
-    
-    app.globalData.userInfo = wx.getStorageSync('userInfo') || {}
-    if (app.globalData.userInfo && app.globalData.userInfo.nickName && app.globalData.userInfo.avatarUrl){
-      _this.setData({ user_img: app.globalData.userInfo.avatarUrl })
-      _this.setData({ user_name: app.globalData.userInfo.nickName })
-      _this.setData({ isLogin: true })
-    }else{
-      wx.getSetting({
-        success: res => {
-          let state = res.authSetting['scope.userInfo']
-          if (state) {
-            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-            wx.getUserInfo({
-              success: res => {
-                // 可以将 res 发送给后台解码出 unionId
-                app.globalData.userInfo = res.userInfo
-                wx.setStorageSync('userInfo', res.userInfo)
-                _this.setData({ user_img: app.globalData.userInfo.avatarUrl })
-                _this.setData({ user_name: app.globalData.userInfo.nickName })
-              },
-              complete: ()=>{
-                _this.setData({ isLogin: state})
-              }
-            })
-          }
-        }
-      })
-    }
+    app.tools.isLogin({
+      success: function (res) {
+        app.globalData.userInfo = res.r1;
+        console.log(app.globalData.userInfo)
+        _this.setData({ user_img: app.globalData.userInfo.avatarUrl })
+        _this.setData({ user_name: app.globalData.userInfo.nickName })
+
+        app.globalData.sessionid = res.r3.content.sessionid;
+        app.globalData.userInfo.userid = res.r3.content.result.id;
+        app.globalData.userInfo.unionid = res.r3.content.result.unionid;
+        
+        // 跳转首页
+        wx.reLaunch({
+          url: '/pages/index/index',
+        });
+      },
+      fail: function (res) {
+        wx.showToast({
+          title: '请点击登陆按钮后操作！',
+          icon: 'none'
+        })
+      }
+    })
   },
 
   /**

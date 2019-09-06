@@ -120,7 +120,20 @@ Page({
     ],
   },
   onLoad: function () {
-    
+    app.tools.isLogin({
+      success: function () {
+        console.log(1)
+      },
+      fail: function (res) {
+        wx.showToast({
+          title: '请登陆！',
+          icon: 'none'
+        })
+        wx.redirectTo({
+          url: '/pages/user/index',
+        })
+      }
+    })
   },
   imageLoad: function(e){
     var imgwidth = e.detail.width,

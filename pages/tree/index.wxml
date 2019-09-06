@@ -1,0 +1,21 @@
+<!--pages/tree/index.wxml-->
+
+<view class="container">
+  <view class='codeInput' wx:if="codeInputShow">
+    <van-cell-group>
+      <van-field
+        value="{{ code }}"
+        required
+        clearable
+        label="邀请码"
+        placeholder="请输入邀请码"
+        bind:change="onChange"
+      />
+    </van-cell-group>
+    <view class="btn">
+      <van-button size="large" round color="rgb(255, 46, 99)" bindtap='setCode'>提交</van-button>
+    </view>
+  </view>
+  <view wx:else class='tree'>
+  </view>
+</view>
