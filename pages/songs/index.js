@@ -1,4 +1,9 @@
 // pages/songs/index.js
+const app = getApp()
+const music = wx.createInnerAudioContext()
+let timer = null,
+    time_now = 0
+
 Page({
 
   /**
@@ -7,19 +12,62 @@ Page({
   data: {
     music_title: 'moon river',
     music_desc: '描述信息',
-    music_state: false,
+    music_state: true,
+    musicPercent: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const _this = this
+    // 播放音乐
+    app.tools.request({
+      url: 'media/' + options.id,
+      success: function (r5) {
+        let realName = r5.data.content.realName;
+        console.log(r5.data)
+        _this.setData({
+          music_title: r5.data.content.realName,
+          music_desc: r5.data.content.updateDate,
+        })
+        music.src = r5.data.content.filePath.replace("/opt/data/", app.globalData.baseUrl)
+        _this.clickPlay()
+      }
+    });
   },
+  play: function () {
+    const _this = this
+    // 监听播放进度
+    timer = setInterval(function () {
+      time_now += 1
+      _this.setData({
+        musicPercent: music.duration ? (time_now / music.duration * 100 + '').split('.')[0] : 0
+      })
+      if (music.duration && time_now > music.duration) {
+        _this.clickPlay()
+      }
+    }, 1000)
 
-  clickPlay: function(s){
+    music.play();
+  },
+  //点击 停止
+  stop: function () {
+    // 计时器
+    clearInterval(timer)
+   // 音乐 
+    music.pause();
+  },
+  clickPlay: function(){
+    // 播放与暂停
     var state = !this.data.music_state
     this.data.music_state = state
     this.setData({ music_state: state })
+    if (state){
+      this.stop()
+    }else{
+      this.play()
+    }
   },
 
   /**

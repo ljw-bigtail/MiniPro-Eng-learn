@@ -8,7 +8,7 @@
     <view class='center'>
       <image src='/img/music-cd.jpg' class='animateRound {{!music_state ? "" : "animatePaused"}}' mode='widthFix'></image>
     </view>
-    <van-progress class='progress' color="rgb(255, 46, 99)" percentage="25" />
+    <van-progress class='progress' color="rgb(255, 46, 99)" percentage="{{musicPercent}}" />
     <view class='bottom btn_box'>
       <view class='btn'>
         <van-icon name="arrow-left" size='42px'/>

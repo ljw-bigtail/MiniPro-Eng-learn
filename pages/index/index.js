@@ -5,17 +5,8 @@ const app = getApp()
 Page({
   data: {
     active: 0,
-    bannerList: [{
-      detailId: '0',
-      img: 'http://www.iyzjj.com/templates/jmw/images/banner.jpg'
-    }, {
-      detailId: '0',
-      img: 'http://www.iyzjj.com/templates/jmw/images/banner.jpg'
-    }, {
-      detailId: '0',
-      img: 'http://www.iyzjj.com/templates/jmw/images/banner.jpg'
-    }],
-    imgheights: [],
+    bannerList: [],
+    imgheights: 500,
     current: 0,
     imgwidth: 750,
     //是否采用衔接滑动  
@@ -34,95 +25,16 @@ Page({
     //滑动动画时长毫秒  
     duration: 300,
     tab_active: 0,
-    songsList: [
-      {
-        id: '1',
-        name: 'moon river',
-      }, {
-        id: '2',
-        name: 'moon river1',
-      }, {
-        id: '3',
-        name: 'moon river3',
-      }, {
-        id: '1',
-        name: 'moon river',
-      }, {
-        id: '2',
-        name: 'moon river1',
-      }, {
-        id: '3',
-        name: 'moon river3',
-      }, {
-        id: '3',
-        name: 'moon river3',
-      }, {
-        id: '1',
-        name: 'moon river',
-      }, {
-        id: '2',
-        name: 'moon river1',
-      }, {
-        id: '3',
-        name: 'moon river3',
-      }
-    ],
-    newsList: [
-      {
-        id: '1',
-        name: '测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '2',
-        name: '测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }, {
-        id: '3',
-        name: '测试内容测试内容测试内容测试内容测试内容测试内容测试内容',
-        date: '2018-01-01',
-      }
-    ],
+    songsList: [],
+    newsList: [],
   },
   onLoad: function () {
+    const _this = this
     app.tools.isLogin({
       success: function () {
-        console.log(1)
+        _this.initbanner()
+        _this.initSongs()
+        _this.initNews()
       },
       fail: function (res) {
         wx.showToast({
@@ -135,18 +47,79 @@ Page({
       }
     })
   },
-  imageLoad: function(e){
-    var imgwidth = e.detail.width,
-        imgheight = e.detail.height,
-        ratio = imgwidth / imgheight;
-    //计算的高度值  
-    var viewHeight = 750 / ratio;
-    var imgheight = viewHeight;
-    var imgheights = this.data.imgheights;
-    //把每一张图片的对应的高度记录到数组里  
-    imgheights[e.target.dataset.id] = imgheight;
-    this.setData({
-      imgheights: imgheights
+  initSongs: function(){
+    const _this = this
+    app.tools.request({
+      url: 'song/hot?page=1&paeSize=100',
+      method: "POST",
+      data: {},
+      success: function (r2) {
+        _this.setData({
+          songsList: r2.data.content
+        })
+        // TODO 点击加载下一页
+        // that.setData({
+        //   songs_pageTotal: rst.length,
+        //   songs_pageCurr: 0
+        // });
+      }
+    });
+  },
+  openSong: function(e){
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/songs/index?id=' + id
+    });
+  },
+  initNews: function(){
+    const _this = this
+    app.tools.request({
+      url: 'news/queryAll',
+      success: function (r3) {
+        _this.setData({
+          newsList: r3.data.content
+        });
+        // that.setData({
+        //   news_pageTotal: rst.length,
+        //   news_pageCurr: 0
+        // });
+      }
+    });
+  },
+  openNews: function(e){
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/news/index?id=' + id
+    });
+  },
+  initbanner: function(){
+    const _this = this
+    app.tools.request({
+      url: 'wximgs',
+      success(res){
+        let data = []
+        res.data.content.map((e)=>{
+          data.push({
+            img: e.filePath.replace("/opt/app/source/imgs/", app.globalData.baseUrl),
+            id: e.news_id
+          })
+        })
+        _this.setData({
+          bannerList: data
+        })
+        _this.imageLoad(data[0].img)
+      }
+    })
+  },
+  imageLoad: function(src){
+    const _this = this
+    wx.getImageInfo({
+      src: src,
+      success: function (res) {
+        _this.setData({
+          imgheights: res.height / res.width * wx.getSystemInfoSync().windowWidth * 2,
+        })
+      }
     })
   },
   bindchange: function (e) {

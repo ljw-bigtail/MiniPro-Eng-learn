@@ -35,7 +35,11 @@ let tools = {
     wx.request({
       url: _this.baseUrl + opt.url,
       data: opt.data,
-      header: { 'Content-Type': 'application/json' },
+      header: {
+        'Content-Type': 'application/json',
+        'Cookie': wx.getStorageSync('cookieKey'),
+        'ENG_WX_TOKEN': wx.getStorageSync('userId'),
+      },
       method: opt.method || 'GET',
       dataType: 'json',
       success: function(res){
@@ -65,14 +69,13 @@ let tools = {
               method: "POST",
               data: {
                 "wxCode": r2.code,
-                "loginType": "3",
-                "referee": "1",
-                "userName": r1.userInfo.nickName
+                "referee": "10000",
               },
               success: function (r3) {
                 if (r3 && r3.header && r3.header['Set-Cookie']) {
-                  wx.setStorageSync('cookieKey', r3.header['Set-Cookie']);   //保存Cookie到Storage
+                  wx.setStorageSync('cookieKey', r3.header['Set-Cookie']);   //保存Cookie
                 }
+                wx.setStorageSync('userId', r3.data.content.result.id);   //保存userId
                 opt.success && opt.success({
                   r1: r1.userInfo,
                   r3: r3.data,
@@ -92,7 +95,24 @@ let tools = {
   },
 }
 
+// https://yyzzkt.com/tologin
+
+let send = function(opt){
+  wx.request({
+    url: 'https://yyzzkt.com' + opt.url,
+    data: opt.data,
+    method: opt.method,
+    header: {
+      'content-type': 'application/json' // 默认值
+    },
+    success(res) {
+      opt.success && opt.success(res.data)
+    }
+  })
+}
+
 module.exports = {
   formatTime: formatTime,
-  tools: tools
+  tools: tools,
+  send: send
 }
