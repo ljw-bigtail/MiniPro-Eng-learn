@@ -101,6 +101,7 @@ Page({
         res.data.content.map((e)=>{
           data.push({
             img: e.filePath.replace("/opt/app/source/imgs/", app.globalData.baseUrl),
+            // img: app.globalData.baseUrl + 'download/' + e.mid + '.jpg',
             id: e.news_id
           })
         })
