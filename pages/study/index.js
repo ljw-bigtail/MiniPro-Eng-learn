@@ -11,44 +11,13 @@ Page({
     gradeRadio: '',
     textbookRadio: '',
     unitRadio: '',
-    grade: [{
-      val: '一年级',
-      id: 0,
-    }, {
-      val: '二年级',
-      id: 1,
-    }, {
-      val: '三年级',
-      id: 2,
-    }], 
-    textbook: [{
-      val: '人教版',
-      id: 0,
-    }, {
-      val: '苏教版',
-      id: 1,
-    }], 
-    unit: [{
-      val: '第一单元',
-      id: 0,
-    }, {
-      val: '第二单元',
-      id: 1,
-    }, {
-      val: '第三单元',
-      id: 2,
-    }, {
-      val: '第四单元',
-      id: 3,
-    }],
+    grade: [], 
+    textbook: [], 
+    unit: [],
     popShow: false,
     active: 1,
     tab_active: 0,
-    book: {
-      grade: '一年级', // 年级
-      textbook: '人教版（上）', // 教材
-      unit: '第一单元' // 单元
-    }
+    book: app.globalData.bookInfo ? (app.globalData.bookInfo.value) : null
   },
   onClose() {
     this.setData({ popShow: false });
@@ -75,6 +44,7 @@ Page({
     this.setData({
       gradeRadio: name
     });
+    this.inittextbook(name)
     this.setData({ state: 1});
   },
   textbookChange(event) {
@@ -87,6 +57,7 @@ Page({
     this.setData({
       textbookRadio: name
     });
+    this.initunit(name)
     this.setData({ state: 2});
   },
   unitChange(event) {
@@ -102,14 +73,23 @@ Page({
     this.setData({ popShow: false });
     // TODO 
     // 设置结果
-    this.setData({
-      book: {
-        grade: this.data.gradeRadio, // 年级
-        textbook: this.data.textbookRadio, // 教材
-        unit: this.data.unitRadio // 单元
-      }
-    });
-    console.log(this.data.book)
+    let data = {
+      grade: '', // 年级
+      textbook: '', // 教材
+      unit: '' // 单元
+    }
+    let _this = this
+    this.data.grade.map(function (e) {
+      if (e.key == _this.data.gradeRadio) {data.grade = e.value}
+    })
+    this.data.textbook.map(function (e) {
+      if (e.id == _this.data.textbookRadio) { data.textbook = e.name}
+    })
+    this.data.unit.map(function (e) {
+      if (e.key == _this.data.unitRadio) { data.unit = e.value}
+    })
+    this.setBook(data)
+    // console.log(this.data.book)
   },
 
   /**
@@ -117,6 +97,40 @@ Page({
    */
   onLoad: function (options) {
     this.initgrade()
+  },
+  setBook: function (data){
+    const _this = this
+    app.tools.request({
+      url: 'user/setLearCfg',
+      method: "POST",
+      data: {
+        'uid': app.globalData.userInfo.userid || '',
+        'grade': _this.data.gradeRadio,
+        'bid': _this.data.textbookRadio,
+        'chapter': _this.data.unitRadio
+      },
+      success: function (r3) {
+        if (r3.data.content == 1){
+          _this.setData({
+            book: data
+          }); 
+          app.globalData.bookInfo = {
+            'grade': _this.data.gradeRadio,
+            'bid': _this.data.textbookRadio,
+            'chapter': _this.data.unitRadio,
+            'value': data,
+          }
+          app.tools.toast('设置成功，现在去学习···')
+          setTimeout(function(){
+            wx.navigateTo({
+              url: '/pages/study/book',
+            })
+          }, 1500)
+        }else{
+          app.tools.toast('设置失败，请联系管理员或者重试···')
+        }
+      }
+    });
   },
 
   // 加载年级
@@ -132,7 +146,32 @@ Page({
       }
     });
   },
-  
+  // 加载教材
+  inittextbook: function (val) {
+    const _this = this
+    app.tools.request({
+      url: 'book/getByGrade?page=1&paeSize=10&grade=' + val,
+      method: "POST",
+      success: function (r3) {
+        _this.setData({
+          textbook: r3.data.content
+        });
+      }
+    });
+  },
+  // 加载单元
+  initunit: function (val) {
+    const _this = this
+    app.tools.request({
+      url: 'enum/chapter',
+      method: "POST",
+      success: function (r3) {
+        _this.setData({
+          unit: r3.data.content
+        });
+      }
+    });
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

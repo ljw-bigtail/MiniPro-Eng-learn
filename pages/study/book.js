@@ -1,4 +1,7 @@
 // pages/study/book.js
+
+const app = getApp()
+
 Page({
 
   /**
@@ -6,79 +9,55 @@ Page({
    */
   data: {
     tab_active: 0,
-    readList: [
-      {
-        id: '1',
-        name: 'teacher',
-      }, {
-        id: '2',
-        name: 'moon ',
-      }, {
-        id: '3',
-        name: ' river3',
-      }, {
-        id: '1',
-        name: 'moon ',
-      }, {
-        id: '2',
-        name: ' river1',
-      }, {
-        id: '3',
-        name: 'moon ',
-      }, {
-        id: '3',
-        name: ' river3',
-      }, {
-        id: '1',
-        name: ' river',
-      }, {
-        id: '2',
-        name: 'moon ',
-      }, {
-        id: '3',
-        name: ' river3',
-      }
-    ],
-    wordList: [
-      {
-        id: '1',
-        name: 'teacher',
-      }, {
-        id: '2',
-        name: 'moon ',
-      }, {
-        id: '3',
-        name: ' river3',
-      }, {
-        id: '1',
-        name: 'moon ',
-      }, {
-        id: '2',
-        name: ' river1',
-      }, {
-        id: '3',
-        name: 'moon ',
-      }, {
-        id: '3',
-        name: ' river3',
-      }, {
-        id: '1',
-        name: ' river',
-      }, {
-        id: '2',
-        name: 'moon ',
-      }, {
-        id: '3',
-        name: ' river3',
-      }
-    ],
+    readList: [],
+    wordList: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // app.globalData.bookInfo = {
+    //   'grade': _this.data.gradeRadio,
+    //   'bid': _this.data.textbookRadio,
+    //   'chapter': _this.data.unitRadio
+    // }
+    this.initWord()
+    this.initRead()
+  },
 
+  initWord: function () {
+    const _this = this
+    app.tools.request({
+      url: 'word/getWithGBC?grade=' + app.globalData.bookInfo.grade + '&bid=' + app.globalData.bookInfo.bid + '&chapter=' + app.globalData.bookInfo.chapter,
+      method: "POST",
+      success: function (r3) {
+        _this.setData({
+          wordList: r3.data.content.result
+        });
+      }
+    });
+  },
+  initRead: function(){
+    const _this = this
+    app.tools.request({
+      url: 'artical/getWithGBC?grade=' + app.globalData.bookInfo.grade + '&type=QUESTION_TYPE_2',
+      method: "POST",
+      success: function (r3) {
+        _this.setData({
+          readList: r3.data.content.result
+        });
+      }
+    });
+  },
+  openWords: function (e) {
+    wx.navigateTo({
+      url: '/pages/book/words?word=' + e.currentTarget.dataset.word,
+    })
+  },
+  openReads: function(e){
+    // /pages/book / reads ? id = {{ item.id }}
+    // TODO 准备支付然后跳转
   },
 
   /**

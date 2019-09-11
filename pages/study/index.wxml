@@ -6,9 +6,9 @@
         <view class='btn' bindtap='openBook'>
           <text>去学习</text>
         </view>
-        <view class='tip van-multi-ellipsis--l2'>{{book.grade}} - {{book.textbook}} - {{book.unit}}</view>
+        <view class='tip van-multi-ellipsis--l2'>{{book ? (book.grade + ' - ' + book.textbook + ' - ' + book.unit) : '请选择教材'}}</view>
         <view class='btn light' bindtap='openBookSet'>
-          <text>换教材</text>
+          <text>{{book ? '换教材' : '选教材'}}</text>
         </view>
       </view>
     </van-tab>
@@ -23,14 +23,14 @@
       <van-radio-group value="{{ gradeRadio }}" bind:change="gradeChange">
         <van-cell-group>
           <van-cell
-            title="{{item.val}}"
+            title="{{item.value}}"
             value-class="value-class"
             clickable
-            data-name="{{item.val}}"
+            data-name="{{item.key}}"
             bind:click="gradeClick"
             wx:for="{{grade}}" wx:key="{{index}}" 
           >
-            <van-radio name="{{item.val}}" />
+            <van-radio name="{{item.value}}" />
           </van-cell>
         </van-cell-group>
       </van-radio-group>
@@ -40,14 +40,14 @@
       <van-radio-group value="{{ textbookRadio }}" bind:change="textbookChange">
         <van-cell-group>
           <van-cell
-            title="{{item.val}}"
+            title="{{item.name}}"
             value-class="value-class"
             clickable
-            data-name="{{item.val}}"
+            data-name="{{item.id}}"
             bind:click="textbookClick"
             wx:for="{{textbook}}" wx:key="{{index}}" 
           >
-            <van-radio name="{{item.val}}" />
+            <van-radio name="{{item.name}}" />
           </van-cell>
         </van-cell-group>
       </van-radio-group>
@@ -57,14 +57,14 @@
       <van-radio-group value="{{ unitRadio }}" bind:change="unitChange">
         <van-cell-group>
           <van-cell
-            title="{{item.val}}"
+            title="{{item.value}}"
             value-class="value-class"
             clickable
-            data-name="{{item.val}}"
+            data-name="{{item.key}}"
             bind:click="unitClick"
             wx:for="{{unit}}" wx:key="{{index}}" 
           >
-            <van-radio name="{{item.val}}" />
+            <van-radio name="{{item.value}}" />
           </van-cell>
         </van-cell-group>
       </van-radio-group>

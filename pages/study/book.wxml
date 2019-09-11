@@ -3,24 +3,20 @@
   <van-tabs sticky active="{{ tab_active }}" bind:change="onChange" animated swipeable color="rgb(255, 46, 99)">
     <van-tab title="单词">
       <view class="ul list">
-        <view class="li van-hairline--bottom" wx:for="{{wordList}}" wx:key="{{index}}">
-          <navigator url="/pages/book/words?id={{item.id}}">
+        <view class="li van-hairline--bottom" wx:for="{{wordList}}" wx:key="{{index}}" bindtap='openWords' data-word='{{item.word}}'>
             <view class="van-ellipsis">{{index + 1}}</view>
-            <view class="van-ellipsis">{{item.name}}</view>
+            <view class="van-ellipsis">{{item.word}}</view>
             <view><van-icon name="arrow" size="20px"/></view>
-          </navigator>
         </view>
         <view class="li tips">已经到最底部了···</view>
       </view>
     </van-tab>
     <van-tab title="阅读">
      <view class="ul list">
-        <view class="li van-hairline--bottom" wx:for="{{readList}}" wx:key="{{index}}">
-          <navigator url="/pages/book/reads?id={{item.id}}">
+        <view class="li van-hairline--bottom" wx:for="{{readList}}" wx:key="{{index}}" bindtap='openReads' data-id='{{item.id}}'>
             <view class="van-ellipsis">{{index + 1}}</view>
             <view class="van-ellipsis">{{item.name}}</view>
             <view><van-icon name="arrow" size="20px"/></view>
-          </navigator> 
         </view>
         <view class="li tips">已经到最底部了···</view>
       </view>
