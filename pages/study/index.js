@@ -116,8 +116,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.initgrade()
   },
+
+  // 加载年级
+  initgrade: function(){
+    const _this = this
+    app.tools.request({
+      url: 'enum/grade',
+      method: "POST",
+      success: function (r3) {
+        _this.setData({
+          grade: r3.data.content
+        });
+      }
+    });
+  },
+  
 
   /**
    * 生命周期函数--监听页面初次渲染完成

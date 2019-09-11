@@ -47,7 +47,7 @@ let tools = {
       },
       fail: function (res) {
         _this.toast('系统发生异常')
-        console.log(e)
+        console.log(res)
       },
       complete: function (res){
         opt.complete && opt.complete(res)
