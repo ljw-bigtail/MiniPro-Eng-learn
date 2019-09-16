@@ -51,9 +51,37 @@ Page({
     });
   },
   openWords: function (e) {
-    wx.navigateTo({
-      url: '/pages/book/words?word=' + e.currentTarget.dataset.word,
-    })
+    const _this = this
+    let id = e.currentTarget.dataset.word;
+    app.tools.request({
+      url: 'artical/checPayed?aid=' + id,
+      method: "POST",
+      success: function (r1) {
+        var cont = r1.data.content.result;
+        console.log(cont)
+        // if (!cont) {
+        //   //2、没有支付过的，需要先支付（弹框询问是否支付）
+        //   wx.showModal({
+        //     content: '该阅读尚未支付学币，是否支付？',
+        //     showCancel: true,
+        //     confirmText: '确定',
+        //     confirmColor: '#72B9C3',
+        //     success: function (res) {
+        //       if (res.confirm) {
+        //         //3、去支付
+        //         that.sureZhifuYuedu(id);
+        //       }
+        //     }
+        //   })
+        // } else {
+          //已经支付
+          wx.navigateTo({
+            url: '/pages/book/words?word=' + id,
+          })
+        // }
+        wx.hideLoading();
+      }
+    });
   },
   openReads: function(e){
     // /pages/book / reads ? id = {{ item.id }}
