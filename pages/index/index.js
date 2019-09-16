@@ -35,15 +35,6 @@ Page({
         _this.initbanner()
         _this.initSongs()
         _this.initNews()
-      },
-      fail: function (res) {
-        wx.showToast({
-          title: '请登陆！',
-          icon: 'none'
-        })
-        wx.redirectTo({
-          url: '/pages/user/index',
-        })
       }
     })
   },

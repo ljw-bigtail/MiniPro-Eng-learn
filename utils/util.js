@@ -94,6 +94,24 @@ let tools = {
       }
     });
   },
+  goToLogin: function(){
+    this.toast('请登陆！正在跳转···')
+    setTimeout(function(){
+      wx.redirectTo({
+        url: '/pages/user/index',
+      })
+    }, 1500)
+  },
+  goToDeposit: function () {
+    this.toast('学币不足，请先充值···')
+    setTimeout(function () {
+      // TODO 跳转到充值页
+
+      // wx.redirectTo({
+      //   url: '/pages/user/index',
+      // })
+    }, 1500)
+  },
 }
 
 // https://yyzzkt.com/tologin

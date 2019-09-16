@@ -10,7 +10,7 @@
       <van-cell is-link title="学币" bind:click="openUrl" data-url="/pages/cash/index"/>
       <van-cell is-link title="学族" bind:click="openUrl" data-url="/pages/tree/index"/>
     </van-cell-group>
-    <view class="btn">
+    <view class="btn" wx:if="{{loginShow}}">
       <van-button id="authorize_btn" wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" size="large" round color="rgb(255, 46, 99)" bindtap='login'>登录</van-button>
       <!-- <van-button wx:else plain size="large" round color="rgb(255, 46, 99)" bindtap='logout'>退出</van-button> -->
     </view>

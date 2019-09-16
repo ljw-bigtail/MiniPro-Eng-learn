@@ -26,13 +26,90 @@ Page({
     app.tabbarNavTo(e.detail)
   },
   openBookSet: function(){
-    this.setData({ popShow: true });
-    this.setData({ state: 0 });
+    if (app.globalData.userInfo) {
+      this.setData({ popShow: true });
+      this.setData({ state: 0 }); 
+    } else {
+      app.tools.goToLogin()
+    }
   },
   openBook: function () {
-    wx.navigateTo({
-      url: '/pages/study/book',
-    })
+    if (app.globalData.userInfo){
+      if (this.data.book){
+        // 去学习
+        const _this = this
+        let _url = "?grade=" + app.globalData.bookInfo.grade + "&bid=" + app.globalData.bookInfo.bid + "&chapter=" + app.globalData.bookInfo.chapter;
+        app.tools.request({
+          url: 'word/checkWithGBC' + _url,
+          method: "POST",
+          success: function (r1) {
+            var cont = r1.data.content.result;
+            if (!cont) {
+              // 是否支付
+              wx.showModal({
+                content: '该阅读尚未支付学币，是否支付？',
+                showCancel: true,
+                confirmText: '确定',
+                confirmColor: 'rgb(255, 46, 99)',
+                success: function (res) {
+                  if (res.confirm) {
+                    // 去支付
+                    _this.enoughBalance(_url);
+                  }
+                }
+              })
+            } else {
+              // 已经支付
+              wx.navigateTo({
+                url: '/pages/study/book',
+              })
+            }
+          }
+        })
+      }else{
+        app.tools.toast('请先选择教材···')
+      }
+    }else{
+      app.tools.goToLogin()
+    }
+  },
+  enoughBalance: function (_url) {
+    const _this = this;
+    app.tools.request({
+      url: 'user/wallet',
+      success: function (r1) {
+        var cont = r1.data.content;
+        if (cont.code == "S") {
+          if (cont.result.balance < 1) {
+            // 去充值
+            app.tools.goToDeposit()
+          } else {
+            // 付款
+            _this.pay(_url);
+          }
+        }
+      }
+    });
+  },
+  pay: function (_url) {
+    const _this = this;
+    app.tools.request({
+      url: 'word/payWithGBC' + _url,
+      method: "POST",
+      success: function (r1) {
+        var cont = r1.data.content;
+        if (cont) {
+          // 支付成功了
+          app.tools.toast('支付成功，正在打开课本···')
+          wx.navigateTo({
+            url: '/pages/study/book',
+          })
+        } else {
+          // 支付异常
+          app.tools.toast('支付失败，请联系管理员···')
+        }
+      }
+    });
   },
   gradeChange(event) {
     this.setData({
@@ -96,7 +173,37 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.initBookCache()
     this.initgrade()
+  },
+  initBookCache: function(){
+    const _this = this
+    if (!app.globalData.userInfo || !app.globalData.userInfo.userid){
+      app.tools.toast('请登录···')
+      return
+    }
+    app.tools.request({
+      url: 'user/learCfg?uid=' + app.globalData.userInfo.userid,
+      method: "POST",
+      success: function (r3) {
+        console.log(r3)
+        // TODO 接口需求：当前所选择的教材,回填到data里
+        let data = {
+          grade: '', // 年级
+          textbook: '', // 教材
+          unit: '' // 单元
+        }
+        _this.setData({
+          book: data
+        });
+        app.globalData.bookInfo = {
+          'grade': r3.data.content.grade,
+          'bid': r3.data.content.bid,
+          'chapter': r3.data.content.chapter,
+          'value': data,
+        }
+      }
+    });
   },
   setBook: function (data){
     const _this = this
