@@ -64,7 +64,6 @@ let tools = {
             wx.showLoading({
               title: '正在登陆···'
             })
-            console.log(r2)
             _this.request({
               url: 'login',
               method: "POST",

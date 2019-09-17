@@ -1,2 +1,55 @@
-<!--pages/book/words.wxml-->
-<text>pages/book/words.wxml</text>
+<view class="container">
+  <view class="card header">
+    <!-- 单词 -->
+    <text class="title">{{word}}</text>
+    <!-- 读音 -->
+    <view class="read">
+      <view bindtap='startRead' wx:for="{{mp3List}}" wx:key="{{index}}" data-mp3url="{{item.pron}}" data-index="{{index}}" class="word_mp3_item">
+        <text>{{item.ps}}</text>
+        <van-icon name="volume-o" class="v-btn"/>
+      </view>
+    </view>
+    <!-- 含义 -->
+    <view class="ul">
+      <view wx:for="{{infoList}}" wx:key="{{index}}">{{item.pos}} {{item.acceptation}}</view>
+    </view>
+  </view>
+  <!-- 例句 -->
+  <view class="card" wx:if="{{exampleList.length > 0}}">
+    <view class="ul">
+      <view class="li van-hairline--bottom" wx:for="{{exampleList}}" wx:key="{{index}}" data-id="{{item.mid}}" bindtap="openSong">
+        <view class="van-ellipsis">{{index + 1}}</view>
+        <view>
+          <view class="word_eng">
+            <text wx:for="{{item.orig_a}}" wx:for-index="i" wx:for-item="item_i" wx:key="{{i}}" bindtap='readExampleWord' data-i="{{item_i}}">{{item_i}}</text>
+          </view>
+          <view class="word_cn">{{item.trans}}</view>
+        </view>
+      </view>
+      <view class="li tips">已经到最底部了···</view>
+    </view>
+  </view>
+  <!-- 翻译弹窗 -->
+  <van-dialog
+    use-slot
+    show="{{ show }}"
+    confirm-button-text = '返回'
+    bind:close="dialogClose"
+  >
+    <view class="card sp header">
+      <!-- 单词 -->
+      <text class="title">{{word_example}}</text>
+      <!-- 读音 -->
+      <view class="read">
+        <view bindtap='startRead' wx:for="{{mp3List_example}}" wx:key="{{index}}" data-mp3url="{{item.pron}}" data-index="{{index}}" class="word_mp3_item">
+          <text>{{item.ps}}</text>
+          <van-icon name="volume-o" class="v-btn"/>
+        </view>
+      </view>
+      <!-- 含义 -->
+      <view class="ul">
+        <view wx:for="{{infoList_example}}" wx:key="{{index}}">{{item.pos}} {{item.acceptation}}</view>
+      </view>
+    </view>
+  </van-dialog>
+</view>

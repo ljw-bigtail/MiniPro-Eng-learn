@@ -1,1 +1,23 @@
 /* pages/book/words.wxss */
+page{min-height: 100vh; background: #eaeaea}
+
+.ul{color: #252a34;}
+.ul .li {padding: 32rpx 0;align-items: flex-start}
+.ul .li.tips{padding: 60rpx 0; text-align: center; font-size: 24rpx; color: #eaeaea;display: block;}
+.ul .li > view:nth-child(1){font-size: 24rpx; line-height: 44rpx; padding: 0 20rpx; min-width: 32rpx;overflow: hidden;}
+.ul .li > view:nth-child(2){flex: 1; font-size: 32rpx;line-height: 44rpx;padding-right: 40rpx}
+.ul .li .word_cn{margin-top: 20rpx; font-size: 28rpx}
+.thatWord{color: rgb(255, 46, 99)}
+
+.card{margin: 20rpx; border-radius: 12rpx; overflow: hidden; background: #fff}
+.card.sp{margin: 0; border-radius:0}
+.card.header{background: rgb(255, 46, 99); color: #fff; padding: 60rpx 32rpx 32rpx}
+
+.title{font-size: 52rpx; margin-bottom: 20rpx; display: block}
+
+.read{display: flex; align-items: center; justify-content: space-between}
+.read .word_mp3_item{width: 50%; margin-bottom: 30rpx;}
+.read .v-btn{margin-left: 12rpx; position: relative; bottom: -6rpx}
+
+.card.header .ul{color: #fff;}
+.card.header .ul view{font-size: 28rpx; margin-bottom: 20rpx; line-height: 32rpx;}
