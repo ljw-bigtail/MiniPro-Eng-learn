@@ -44,6 +44,7 @@ Page({
           method: "POST",
           success: function (r1) {
             var cont = r1.data.content.result;
+            console.log(cont)
             if (!cont) {
               // 是否支付
               wx.showModal({
@@ -227,11 +228,12 @@ Page({
             'chapter': _this.data.unitRadio,
             'value': data,
           }
-          app.tools.toast('设置成功，现在去学习···')
+          // app.tools.toast('设置成功，现在去学习···')
           setTimeout(function(){
-            wx.navigateTo({
-              url: '/pages/study/book',
-            })
+            _this.openBook()
+            // wx.navigateTo({
+            //   url: '/pages/study/book',
+            // })
           }, 1500)
         }else{
           app.tools.toast('设置失败，请联系管理员或者重试···')

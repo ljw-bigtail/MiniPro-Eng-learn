@@ -1,2 +1,41 @@
 <!--pages/book/reads.wxml-->
-<text>pages/book/reads.wxml</text>
+<view class="container">
+  <view class="card header">
+    <!-- 标题 -->
+    <text class="title">{{title}}</text>
+  </view>
+  <!-- 例句 -->
+  <view class="card con">
+    <text wx:for="{{content}}" wx:key="{{index}}" bindtap='readExampleWord' data-i="{{item}}">{{item}}</text>
+  </view>
+  <!-- 翻译 -->
+  <view class="card cn">
+    <text wx:if="{{showCN}}" bindtap="closeCN">{{znContent}}</text>
+    <view wx:else bindtap="openCN">显示阅读辅导</view>
+  </view>
+  <view class="tips">已经到最底部了···</view>
+
+  <!-- 翻译弹窗 -->
+  <van-dialog
+    use-slot
+    show="{{ show }}"
+    confirm-button-text = '返回'
+    bind:close="dialogClose"
+  >
+    <view class="card sp header">
+      <!-- 单词 -->
+      <text class="title">{{word_example}}</text>
+      <!-- 读音 -->
+      <view class="read">
+        <view bindtap='startRead' wx:for="{{mp3List_example}}" wx:key="{{index}}" data-mp3url="{{item.pron}}" data-index="{{index}}" class="word_mp3_item">
+          <text>{{item.ps}}</text>
+          <van-icon name="volume-o" class="v-btn"/>
+        </view>
+      </view>
+      <!-- 含义 -->
+      <view class="ul">
+        <view wx:for="{{infoList_example}}" wx:key="{{index}}">{{item.pos}} {{item.acceptation}}</view>
+      </view>
+    </view>
+  </van-dialog>
+</view>

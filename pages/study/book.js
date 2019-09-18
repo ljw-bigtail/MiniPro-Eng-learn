@@ -59,9 +59,9 @@ Page({
   },
   openReads: function(e){
     // 去阅读
-    // wx.navigateTo({
-    //   url: 'words/word?word=' + e.currentTarget.dataset.word
-    // });
+    wx.navigateTo({
+      url: '/pages/book/reads?id=' + e.currentTarget.dataset.id
+    });
   },
 
   /**
