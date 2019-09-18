@@ -1,0 +1,25 @@
+<!--pages/user/cash.wxml-->
+<view class="container">
+  <view class="box">
+    <view class="title">
+      <van-icon class="moneyBtn" name="gold-coin-o" size="40px" color="#fff"/>
+      <text>{{currentMoney}}</text>
+    </view>
+    <view class="tit">交易明细</view>
+    <view class="card">
+      <view class="ul">
+        <view class="li" wx:for="{{inComList}}" wx:key="{{index}}">
+          <view class="left">
+            <text>{{item.counterparty}}</text>
+            <text>{{item.createDate}}</text>
+          </view>
+          <view class="right {{count > 0 ? 'in' : 'out'}}">{{item.count}}</view>
+        </view>
+        <view class="li tips">已经到最底部了···</view>
+      </view> 
+    </view>
+  </view>
+  <view class="bottom">
+    <button bindtap='cashIn'>充值</button>
+  </view>
+</view>

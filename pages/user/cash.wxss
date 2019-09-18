@@ -1,0 +1,28 @@
+/* pages/user/cash.wxss */
+
+page{height: 100vh;}
+.container{height: 100%; display: flex; flex-direction: column;}
+.container .box{flex: 1;display: flex; flex-direction: column;}
+.container .bottom{bottom: 100rpx; padding: 10rpx 10%; box-sizing: border-box; box-shadow: 0px -2px 6px 0px #eaeaea;}
+.container .bottom button{border-radius: 40rpx; background: rgb(255, 46, 99); color: #fff; height: 80rpx; line-height: 80rpx; font-size: 36rpx}
+
+.title{height: 320rpx; background: rgb(255, 46, 99); color: #fff; display: flex; align-items: center; justify-content: center}
+.title text{font-size: 80rpx;display: inline-block; padding: 0 20rpx}
+.moneyBtn{position: relative; top: 6rpx}
+
+.tit{background: #eaeaea;color: #aaa;padding: 20rpx 40rpx;font-size: 32rpx}
+
+.card{overflow-y: auto; flex: 1}
+
+.ul{padding: 12rpx 32rpx;}
+.ul .li{display: flex;align-items: center; justify-content: space-between; padding: 24rpx 0;border-bottom: 1px solid #eaeaea}
+.ul .li:last-child{border-bottom: 0}
+.ul .li .right{font-size: 40rpx; font-weight: 700}
+.ul .li .right.out{color: rgb(255, 46, 99)}
+.ul .li .right.in{color: #252a34}
+.ul .li .left{flex: 1}
+.ul .li .left text{display: block;}
+.ul .li .left text:first-child{color: #000; font-size: 32rpx; padding-bottom: 20rpx}
+.ul .li .left text:last-child{color: #aaa; font-size: 28rpx}
+
+.ul .li.tips{padding: 60rpx 0; text-align: center; font-size: 24rpx; color: #eaeaea;display: block;}
