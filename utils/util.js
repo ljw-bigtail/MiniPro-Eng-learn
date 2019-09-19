@@ -46,7 +46,11 @@ let tools = {
         opt.success && opt.success(res)
       },
       fail: function (res) {
-        _this.toast('系统发生异常')
+        if (opt.fail){
+          opt.fail(res)
+        }else{
+          _this.toast('系统发生异常，请联系客服')
+        }
         console.log(res)
       },
       complete: function (res){

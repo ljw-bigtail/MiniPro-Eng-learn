@@ -26,3 +26,9 @@ page{height: 100vh;}
 .ul .li .left text:last-child{color: #aaa; font-size: 28rpx}
 
 .ul .li.tips{padding: 60rpx 0; text-align: center; font-size: 24rpx; color: #eaeaea;display: block;}
+
+.chooseNum{display: flex; align-items: center; justify-content: space-evenly;padding: 40rpx 20rpx 0; flex-wrap: wrap}
+.chooseNum > view{background: rgb(255, 46, 99); color: #fff; box-shadow: 0px 0px 6px 2px #aaa; border-radius: 16rpx; width: 240rpx; min-height: 180rpx;margin-bottom: 40rpx; display: flex; align-items: center; justify-content: center;position: relative}
+.chooseNum > view > view{padding: 0 20rpx; font-size: 48rpx}
+.chooseNum > view > view text{display: block}
+.chooseNum > view .tip{font-size: 24rpx; color: #eaeaea;display: block;position: absolute; width: 100%; bottom: 10rpx; padding: 12rpx;box-sizing: border-box;left: 0;text-align: center}
