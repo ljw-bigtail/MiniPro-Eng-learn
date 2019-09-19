@@ -1,0 +1,8 @@
+<view class="container">
+  <view class="card">
+    <image src="{{erwm_img_src}}" mode="widthFix"></image>
+  </view>
+  <view class="card shareBtn">
+   <button open-type="share" class="">分享</button>
+  </view>
+</view>

@@ -10,7 +10,8 @@
     "pages/book/reads",
     "pages/tree/index",
     "pages/user/family",
-    "pages/user/cash"
+    "pages/user/cash",
+    "pages/user/share"
   ],
   "window": {
     "backgroundTextStyle": "light",

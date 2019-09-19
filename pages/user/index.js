@@ -15,8 +15,16 @@ Page({
     user_name: '请登录',
     active: 2,
   },
+  openShare: function(){
+    wx.showShareMenu()
+  },
   openTabbar: function (e) {
     app.tabbarNavTo(e.detail)
+  },
+  openUrlTrue: function (event) {
+    wx.navigateTo({
+      url: event.currentTarget.dataset.url,
+    })
   },
   openUrl: function (event){
     if (app.globalData.userInfo) {
