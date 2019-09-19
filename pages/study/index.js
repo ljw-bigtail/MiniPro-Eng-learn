@@ -107,7 +107,7 @@ Page({
           })
         } else {
           // 支付异常
-          app.tools.toast('支付失败，请联系管理员···')
+          app.tools.toast('支付失败，请联系客服···')
         }
       }
     });
@@ -236,7 +236,7 @@ Page({
             // })
           }, 1500)
         }else{
-          app.tools.toast('设置失败，请联系管理员或者重试···')
+          app.tools.toast('设置失败，请联系客服···')
         }
       }
     });
