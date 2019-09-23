@@ -2,7 +2,8 @@
 const app = getApp()
 const music = wx.createInnerAudioContext()
 let timer = null,
-    time_now = 0
+    time_now = 0,
+    lrc = {}
 
 Page({
 
@@ -12,6 +13,7 @@ Page({
   data: {
     music_title: 'moon river',
     music_desc: '描述信息',
+    music_lrc: '暂无歌词···',
     music_state: true,
     musicPercent: 0,
   },
@@ -26,13 +28,33 @@ Page({
       url: 'media/' + options.id,
       success: function (r5) {
         let realName = r5.data.content.realName;
-        console.log(r5.data)
         _this.setData({
           music_title: r5.data.content.realName,
           music_desc: r5.data.content.updateDate,
         })
         music.src = r5.data.content.filePath.replace("/opt/data/", app.globalData.baseUrl)
-        _this.clickPlay()
+        // _this.clickPlay()
+      }
+    });
+    // 歌词
+    app.tools.request({
+      url: 'song/lyric?id=' + options.fdid,
+      method: "POST",
+      success: function (r5) {
+        if (r5.data.content){
+          let index_1_time
+          r5.data.content.map((e,index)=>{
+            for(var i in e){
+              if (index == 0) {
+                index_1_time = Math.floor(i / 100)
+              }
+              lrc[Math.floor(i/100)] = e[i]
+            }
+          })
+          _this.setData({
+            music_lrc: lrc[index_1_time],
+          })
+        }
       }
     });
   },
@@ -40,14 +62,20 @@ Page({
     const _this = this
     // 监听播放进度
     timer = setInterval(function () {
-      time_now += 1
+      time_now += .1
       _this.setData({
         musicPercent: music.duration ? (time_now / music.duration * 100 + '').split('.')[0] : 0
       })
       if (music.duration && time_now > music.duration) {
         _this.clickPlay()
       }
-    }, 1000)
+      let lrc_str = lrc[Math.floor(time_now * 10)]
+      if (lrc_str){
+        _this.setData({
+          music_lrc: lrc_str,
+        })
+      }
+    }, 100)
 
     music.play();
   },

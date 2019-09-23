@@ -10,7 +10,7 @@ page{min-height: 100vh; background: #eaeaea}
 .card.con{text-indent: 2em;}
 
 .card.cn{display: block}
-.card.cn view{text-align: center;font-size: 32rpx; color: #eaeaea}
+.card.cn view{text-align: center;font-size: 32rpx; color: #666}
 
 .title{font-size: 44rpx; display: block; text-align: center}
 

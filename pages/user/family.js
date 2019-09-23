@@ -1,18 +1,33 @@
 // pages/user/family.js
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    activeNames: ['1']
   },
-
+  onChange(event) {
+    this.setData({
+      activeNames: event.detail
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const _this = this
+    var uid = app.globalData.userInfo.userid;
 
+    // 播放音乐
+    app.tools.request({
+      url: 'user/getChildren?isTree=true&pid=' + uid,
+      success: function (r5) {
+        console.log(r5)
+      }
+    });
   },
 
   /**

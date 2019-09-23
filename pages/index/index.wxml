@@ -14,7 +14,7 @@
   <van-tabs sticky active="{{ tab_active }}" bind:change="onChange" animated swipeable color="rgb(255, 46, 99)">
     <van-tab title="经典歌曲">
       <view class="ul musicList">
-        <view class="li van-hairline--bottom" wx:for="{{songsList}}" wx:key="index" data-id="{{item.mid}}" bindtap="openSong">
+        <view class="li van-hairline--bottom" wx:for="{{songsList}}" wx:key="index" data-id="{{item.mid}}" data-fdid="{{item.fdid}}" bindtap="openSong">
           <!-- <navigator url="/pages/songs/index?id={{item.id}}"> -->
             <view class="van-ellipsis">{{index + 1}}</view>
             <view class="van-ellipsis">{{item.name}}</view>

@@ -58,8 +58,9 @@ Page({
   },
   openSong: function(e){
     let id = e.currentTarget.dataset.id;
+    let fdid = e.currentTarget.dataset.fdid;
     wx.navigateTo({
-      url: '/pages/songs/index?id=' + id
+      url: '/pages/songs/index?id=' + id + '&fdid=' + fdid
     });
   },
   initNews: function(){
