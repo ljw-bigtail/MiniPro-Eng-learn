@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "van-cell-group": "../../dist/collapse-item/index",
-    "van-cell": "../../dist/collapse/index"
+    "van-collapse-item": "../../dist/collapse-item/index",
+    "van-collapse": "../../dist/collapse/index"
   }
 }

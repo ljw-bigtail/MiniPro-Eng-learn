@@ -190,9 +190,9 @@ Page({
         console.log(r3)
         // TODO 接口需求：当前所选择的教材,回填到data里
         let data = {
-          grade: '', // 年级
-          textbook: '', // 教材
-          unit: '' // 单元
+          grade: r3.data.content.gradeName, // 年级
+          textbook: r3.data.content.bookName, // 教材
+          unit: r3.data.content.chapterName // 单元
         }
         _this.setData({
           book: data

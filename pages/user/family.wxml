@@ -1,14 +1,27 @@
 <!--pages/user/family.wxml-->
 <view class='container'>
-  <van-collapse value="{{ activeNames }}" bind:change="onChange">
-    <van-collapse-item title="有赞微商城" name="1">
-      提供多样店铺模板，快速搭建网上商城
-    </van-collapse-item>
-    <van-collapse-item title="有赞零售" name="2">
-      网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失
-    </van-collapse-item>
-    <van-collapse-item title="有赞美业" name="3" disabled>
-      线上拓客，随时预约，贴心顺手的开单收银
-    </van-collapse-item>
-  </van-collapse>
+  <view class="ul">
+    <view wx:for="{{tree}}" wx:key="{{index}}" class="level_1">
+      <view class="title">
+        <text>{{item.userInfo.realName}}</text>
+        <text>{{item.createDate}}</text>
+      </view>
+      <view class="ul">
+        <view wx:for-index="j" wx:for-item="items" wx:for="{{item.children}}" wx:key="{{j}}" class="level_2">
+          <view class="title">
+            <text>{{items.userInfo.realName}}</text>
+            <text>{{items.createDate}}</text>
+          </view>
+          <view class="ul">
+            <view wx:for-index="k" wx:for-item="itemss" wx:for="{{items.children}}" wx:key="{{k}}" class="level_2">
+              <view class="title">
+                <text>{{itemss.userInfo.realName}}</text>
+                <text>{{itemss.createDate}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
