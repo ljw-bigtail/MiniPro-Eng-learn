@@ -1,1 +1,11 @@
 /* pages/user/family.wxss */
+
+.container{height: 100vh; width: 100vw}
+
+.ul{background: #fff;color: #252a34;padding: 20rpx 40rpx;}
+.ul .li {padding: 20rpx 0;}
+.msg{font-size: 24rpx; line-height: 24rpx; min-width: 300rpx;  padding: 32rpx; border-radius: 12rpx; border: 2rpx solid rgb(255, 46, 99); color: rgb(255, 46, 99);}
+.msg .me{background: rgb(255, 46, 99); color: #fff;}
+.msg text{display: block; padding: 12rpx 0}
+
+.ul .ul{margin-left: 40rpx; border-left: 1px dashed #ccc}

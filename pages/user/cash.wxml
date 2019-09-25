@@ -38,23 +38,23 @@
       </view>
       <view bindtap="cashIn" data-num="100">
         <van-icon class="moneyIcon" name="gold-coin-o" size="40rpx" color="#fff"/>
-        <view>100</view>
+        <view><text>100</text><text class="tip">奖励80学币!</text></view>
       </view>
       <view bindtap="cashIn" data-num="200">
         <van-icon class="moneyIcon" name="gold-coin-o" size="40rpx" color="#fff"/>
-        <view>200</view>
+        <view><text>200</text><text class="tip">奖励180学币!</text></view>
       </view>
       <view bindtap="cashIn" data-num="300">
         <van-icon class="moneyIcon" name="gold-coin-o" size="40rpx" color="#fff"/>
-        <view>300</view>
+        <view><text>300</text><text class="tip">奖励300学币!</text></view>
       </view>
       <view bindtap="cashIn" data-num="400">
         <van-icon class="moneyIcon" name="gold-coin-o" size="40rpx" color="#fff"/>
-        <view>400</view>
+        <view><text>400</text><text class="tip">奖励420学币!</text></view>
       </view>
       <view bindtap="cashIn" data-num="500">
         <van-icon class="moneyIcon" name="gold-coin-o" size="40rpx" color="#fff"/>
-        <view>500</view>
+        <view><text>500</text><text class="tip">奖励550学币!</text></view>
       </view>
     </view>
   </van-dialog>

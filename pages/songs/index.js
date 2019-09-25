@@ -4,7 +4,8 @@ const music = wx.createInnerAudioContext()
 let lrc = {},
     update_timer_interval = 500,
 // TODO  社区里说是安卓在250ms | 500ms ,ios 在1000ms ,如果ios测试后的确与安卓不一致，需要根据系统做区分，建议值大100ms
-  can_play = false
+    can_play = false,
+    screenClose = 0
 
 Page({
 
@@ -24,12 +25,6 @@ Page({
    */
   onLoad: function (options) {
     const _this = this
-    // 初始化
-    this.setData({
-      musicPercent: 0,
-      music_lrc: '暂无歌词···',
-      music_state: true,
-    })
     // 播放音乐
     app.tools.request({
       url: 'media/' + options.id,
@@ -40,8 +35,6 @@ Page({
           music_desc: r5.data.content.updateDate,
         })
         _this.setSong(r5.data.content.filePath.replace("/opt/data/", app.globalData.baseUrl))
-        // 自动播放
-        // _this.clickPlay()
       }
     });
     // 歌词
@@ -80,11 +73,13 @@ Page({
     })
     music.onTimeUpdate(()=>{
       // 进度条
+      console.log(music.currentTime)
+
       _this.setData({
-        musicPercent: Math.floor(music.currentTime / music.duration * 100)
+        musicPercent: Math.ceil(music.currentTime / music.duration * 100)
       })
       // 歌词
-      let lrc_timer = Math.floor(music.currentTime * 1000)
+      let lrc_timer = Math.ceil(music.currentTime * 1000)
       for (var i in lrc) {
         if (i - lrc_timer < update_timer_interval && i - lrc_timer > 0) {
           _this.setData({
@@ -96,18 +91,12 @@ Page({
     })
     music.onCanplay((res) => {
       can_play = true
-      this.clickPlay()
+      // 自动播放
+      // this.clickPlay()
     })
     music.onWaiting((res) => {
-      app.tools.toast('网络较慢，正在加载···')
+      // app.tools.toast('网络较慢，正在加载···')
     })
-  },
-  play: function () {
-    music.play();
-  },
-  //点击 停止
-  stop: function () {
-    music.pause();
   },
   clickPlay: function(){
     // 播放与暂停
@@ -118,9 +107,11 @@ Page({
     var state = !this.data.music_state
     this.setData({ music_state: state })
     if (state){
-      this.stop()
+      // 暂停
+      music.pause();
     }else{
-      this.play()
+      // 播放
+      music.play();
     }
   },
 
@@ -134,20 +125,32 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (screenClose == 1){
+      this.clickPlay()
+    }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.clickPlay()
+    screenClose = 1
+    this.setData({
+      music_state: true,
+    })
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.clickPlay()
+    // 初始化
+    music.stop();
+    this.setData({
+      musicPercent: 0,
+      music_lrc: '暂无歌词···',
+      music_state: true,
+    })
   },
 
   /**

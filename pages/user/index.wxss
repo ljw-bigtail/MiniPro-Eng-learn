@@ -4,3 +4,6 @@
 .user image{width: 160rpx; height: 160rpx; border-radius: 50%; overflow: hidden;margin: 40rpx}
 
 .btn{padding: 60rpx 15%;background: #fff}
+
+.radioBox{padding: 24rpx; display: flex; align-items: center}
+.radio{display: inline-block; margin-right: 30rpx}

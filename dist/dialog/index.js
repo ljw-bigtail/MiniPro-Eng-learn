@@ -63,9 +63,9 @@ VantComponent({
         },
         handleAction(action) {
             if (this.data.asyncClose) {
-                this.set({
-                    [`loading.${action}`]: true
-                });
+                // this.set({
+                //     [`loading.${action}`]: true
+                // });
             }
             this.onClose(action);
         },

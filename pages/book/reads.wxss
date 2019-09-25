@@ -5,7 +5,7 @@ page{min-height: 100vh; background: #eaeaea}
 .card.header{background: rgb(255, 46, 99); color: #fff;}
 /* .card.header{border-bottom: rgb(255, 46, 99) 1px solid; color: rgb(255, 46, 99);} */
 
-.card text{font-size: 32rpx; line-height: 40rpx}
+.card text{font-size: 32rpx; line-height: 40rpx; font-family: -apple-system,BlinkMacSystemFont,SF UI Text,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif}
 
 .card.con{text-indent: 2em;}
 

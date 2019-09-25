@@ -1,20 +1,20 @@
 <!--pages/user/family.wxml-->
-<view class='container'>
-  <view class="ul">
-    <view wx:for="{{tree}}" wx:key="{{index}}" class="level_1">
-      <view class="title">
+<scroll-view view class='container' scroll-x scroll-y scroll-left="0" scroll-top="{{scroll_top}}">
+  <view class="ul" id="ulBox">
+    <view wx:for="{{tree}}" wx:key="{{index}}" class="level_1 li">
+      <view class="msg" id="first_level_{{index}}">
         <text>{{item.userInfo.realName}}</text>
         <text>{{item.createDate}}</text>
       </view>
       <view class="ul">
-        <view wx:for-index="j" wx:for-item="items" wx:for="{{item.children}}" wx:key="{{j}}" class="level_2">
-          <view class="title">
+        <view wx:for-index="j" wx:for-item="items" wx:for="{{item.children}}" wx:key="{{j}}" class="level_2 li">
+          <view class="msg">
             <text>{{items.userInfo.realName}}</text>
             <text>{{items.createDate}}</text>
           </view>
           <view class="ul">
-            <view wx:for-index="k" wx:for-item="itemss" wx:for="{{items.children}}" wx:key="{{k}}" class="level_2">
-              <view class="title">
+            <view wx:for-index="k" wx:for-item="itemss" wx:for="{{items.children}}" wx:key="{{k}}" class="level_3 li">
+              <view class="msg">
                 <text>{{itemss.userInfo.realName}}</text>
                 <text>{{itemss.createDate}}</text>
               </view>
@@ -24,4 +24,4 @@
       </view>
     </view>
   </view>
-</view>
+</scroll-view>

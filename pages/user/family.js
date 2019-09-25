@@ -11,6 +11,7 @@ Page({
     activeName: '0',
     tree: [],
     username: app.globalData.userInfo,
+    scroll_top: 0
   },
   onChange(event) {
     console.log(event.detail)
@@ -38,6 +39,19 @@ Page({
           console.log(r5.data.content)
           _this.setData({
             tree: r5.data.content
+          })
+          const query = wx.createSelectorQuery()
+          query.select('#ulBox').boundingClientRect()
+          query.selectViewport().scrollOffset()
+          query.exec(function (res) {
+            wx.getSystemInfo({
+              success: function (res1) {
+                _this.setData({
+                  scroll_top: (res[0].height - res1.windowHeight) / 2 
+                })
+              }
+            })
+            
           })
         }
       }

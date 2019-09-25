@@ -24,4 +24,39 @@
     <van-tabbar-item icon="manager-o">我的</van-tabbar-item>
   </van-tabbar>
 
+  <van-dialog
+    use-slot
+    title="实名认证"
+    asyncClose
+    show="{{ show }}"
+    bind:confirm="sureToName"
+  >
+    <van-cell-group>
+      <van-field
+        value="{{ uname }}"
+        placeholder="请输入真实姓名（重要）"
+        bind:change="onChangeUname"
+      />
+      <van-field
+        value="{{ tel }}"
+        placeholder="请填写手机号码（重要）"
+        bind:change="onChangetel"
+      />
+      <van-radio-group value="{{ sex }}" bind:change="onChangeSex" class="radioBox">
+        <van-radio checked-color="rgb(255, 46, 99)" custom-class="radio" name="ENG_SEX_MAN">男</van-radio>
+        <van-radio checked-color="rgb(255, 46, 99)" custom-class="radio" name="ENG_SEX_FEMALE">女</van-radio>
+      </van-radio-group>
+      <van-field
+        value="{{ email }}"
+        placeholder="请填写邮箱"
+        bind:change="onChangeemail"
+      />
+      <van-field
+        value="{{ address }}"
+        placeholder="请输入所在学校"
+        bind:change="onChangeaddress"
+      />
+    </van-cell-group>
+  </van-dialog>
+
 </view>
