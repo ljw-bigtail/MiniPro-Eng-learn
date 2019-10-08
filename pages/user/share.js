@@ -37,7 +37,8 @@ Page({
     return {
       imageUrl: _this.data.erwm_img_src,
       title: '分享我的英语邦',
-      path: '/pages/index/index',
+      // path: '/pages/index/index?shareId=',
+      path: '/pages/user/index?referee=' + app.globalData.userInfo.userid,
       success: function (res) {
         // 转发成功
         console.log("转发成功:" + JSON.stringify(res));

@@ -10,7 +10,7 @@
       <view class="ul">
         <view class="li" wx:for="{{inComList}}" wx:key="{{index}}">
           <view class="left">
-            <text>{{item.counterparty}}</text>
+            <text>{{(item.counterparty || '') + (item.remark || '')}}</text>
             <text>{{item.createDate}}</text>
           </view>
           <view class="right {{count > 0 ? 'in' : 'out'}}">{{item.count}}</view>

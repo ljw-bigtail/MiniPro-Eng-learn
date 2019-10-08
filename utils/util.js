@@ -58,7 +58,7 @@ let tools = {
       },
     })
   },
-  isLogin: function(opt){
+  isLogin: function (opt, referee){
     const _this = this
     wx.getUserInfo({
       success: function (r1) {
@@ -68,12 +68,14 @@ let tools = {
             wx.showLoading({
               title: '正在登陆···'
             })
+            // console.log()
+            // referee
             _this.request({
               url: 'login',
               method: "POST",
               data: {
                 "wxCode": r2.code,
-                "referee": "10000",
+                "referee": referee || "10000",
               },
               success: function (r3) {
                 if (r3 && r3.header && r3.header['Set-Cookie']) {

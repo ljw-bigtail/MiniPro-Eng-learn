@@ -27,6 +27,11 @@ Page({
     tab_active: 0,
     songsList: [],
     newsList: [],
+
+    musicListOver: true,
+    musicPage: 1,
+
+    // newsListOver: true,
   },
   onLoad: function () {
     const _this = this
@@ -38,21 +43,26 @@ Page({
       }
     })
   },
+  nextMusicPage: function(){
+    const _this = this
+    let page = _this.data.musicPage + 1
+    _this.setData({
+      musicPage: page
+    })
+    _this.initSongs()
+  },
   initSongs: function(){
     const _this = this
     app.tools.request({
-      url: 'song/hot?page=1&paeSize=100',
+      url: 'song/hot?page=' + _this.data.musicPage + '&paeSize=10',
       method: "POST",
       data: {},
       success: function (r2) {
+        let songs = _this.data.songsList.concat(r2.data.content)
         _this.setData({
-          songsList: r2.data.content
+          songsList: songs,
+          musicListOver: r2.data.content.length == 10
         })
-        // TODO 点击加载下一页
-        // that.setData({
-        //   songs_pageTotal: rst.length,
-        //   songs_pageCurr: 0
-        // });
       }
     });
   },

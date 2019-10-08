@@ -21,7 +21,8 @@
             <view><van-icon name="music-o" size="20px"/></view>
           <!-- </navigator>  -->
         </view>
-        <view class="li tips">已经到最底部了···</view>
+        <view class="li btn" wx:if="{{musicListOver}}" bindtap='nextMusicPage'>加载更多</view>
+        <view class="li tips" wx:else>已经到最底部了···</view>
       </view>
     </van-tab>
     <van-tab title="学员动态">
@@ -33,7 +34,8 @@
             <view><van-icon name="arrow" size="20px"/></view>
           <!-- </navigator>  -->
         </view>
-        <view class="li tips">已经到最底部了···</view>
+        <!-- <view class="li btn" wx:if="{{newsListOver}}" bindtap='nextNewsPage'>加载更多</view> -->
+        <view class="li tips" >已经到最底部了···</view>
       </view>
     </van-tab>
   </van-tabs>

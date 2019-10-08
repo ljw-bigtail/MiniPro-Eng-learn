@@ -22,6 +22,8 @@ Page({
     email: '',
     tel: '',
     uname: '',
+
+    referee: '10000'
   },
   // 实名认证
   sureToName: function(){
@@ -129,6 +131,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      referee: options.referee
+    })
+    
     if (app.globalData.userInfo){
       this.setData({ 
         user_img: app.globalData.userInfo.avatarUrl,
@@ -160,7 +166,7 @@ Page({
           icon: 'none'
         })
       }
-    })
+    }, _this.data.referee)
   },
 
   /**
