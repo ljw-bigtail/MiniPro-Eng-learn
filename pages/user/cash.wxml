@@ -13,7 +13,7 @@
             <text>{{(item.counterparty || '') + (item.remark || '')}}</text>
             <text>{{item.createDate}}</text>
           </view>
-          <view class="right {{count > 0 ? 'in' : 'out'}}">{{item.count}}</view>
+          <view class="right {{item.count > 0 ? 'in' : 'out'}}">{{item.count}}</view>
         </view>
         <view class="li tips">已经到最底部了···</view>
       </view> 
