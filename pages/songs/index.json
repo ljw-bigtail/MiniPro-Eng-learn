@@ -2,6 +2,7 @@
   "usingComponents": {
     "van-panel": "../../dist/panel/index",
     "van-icon": "../../dist/icon/index",
+    "van-dialog": "../../dist/dialog/index",
     "van-progress": "../../dist/progress/index"
   }
 }

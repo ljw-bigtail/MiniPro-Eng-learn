@@ -2,6 +2,7 @@
 const app = getApp()
 const music = wx.createInnerAudioContext()
 let lrc = {},
+    lrc_data = [],
     update_timer_interval = 500,
 // TODO  社区里说是安卓在250ms | 500ms ,ios 在1000ms ,如果ios测试后的确与安卓不一致，需要根据系统做区分，建议值大100ms
     can_play = false,
@@ -15,9 +16,17 @@ Page({
   data: {
     music_title: 'moon river',
     music_desc: '描述信息',
-    music_lrc: '暂无歌词···',
     music_state: true,
     musicPercent: 0,
+
+    lrc_near: 0,
+    lrc_now: 0,
+
+    show: false, // 翻译弹窗
+    word_example: null,
+    infoList_example: null,
+    mp3List_example: null,
+
   },
 
   /**
@@ -42,18 +51,25 @@ Page({
       url: 'song/lyric?id=' + options.fdid,
       method: "POST",
       success: function (r5) {
-        if (r5.data.content){
-          let index_1_time
+        if (r5.data.content && r5.data.content.length > 0){
           r5.data.content.map((e,index)=>{
             for(var i in e){
-              if (index == 0) {
-                index_1_time = i
-              }
               lrc[i] = e[i]
+              lrc_data.push({
+                data: e[i].split(' '),
+                time: i - 0
+              })
             }
           })
           _this.setData({
-            music_lrc: lrc[index_1_time],
+            lrc_data: lrc_data
+          })
+        }else{
+          _this.setData({
+            lrc_data: [{
+              data: [['暂无歌词···']],
+              time: 1000
+            }]
           })
         }
       }
@@ -66,28 +82,32 @@ Page({
     // 循环播放
     music.loop = true
     music.onEnded(()=>{
-      console.log('end')
       _this.setData({
         musicPercent: 0,
       })
     })
     music.onTimeUpdate(()=>{
-      // 进度条
-      console.log(music.currentTime)
+      let lrc_now_time = Math.ceil(music.currentTime * 1000),
+        lrc_now = 0,
+        lrc_near = 0
 
-      _this.setData({
-        musicPercent: Math.ceil(music.currentTime / music.duration * 100)
-      })
-      // 歌词
-      let lrc_timer = Math.ceil(music.currentTime * 1000)
-      for (var i in lrc) {
-        if (i - lrc_timer < update_timer_interval && i - lrc_timer > 0) {
-          _this.setData({
-            music_lrc: lrc[i],
-          })
-          break;
+      _this.data.lrc_data.map(function(item, index){
+        if (lrc_now_time > item.time && lrc_now_time < lrc_data[index + 1].time){
+          if (index > 3){
+            lrc_near = _this.data.lrc_data[index - 3].time
+          }
+          lrc_now = item.time
         }
+      })
+      if (lrc_near != _this.data.lrc_near){
+        _this.setData({
+          lrc_near: lrc_near, // 歌词
+        })  
       }
+      _this.setData({
+        musicPercent: Math.ceil(music.currentTime / music.duration * 100), // 进度条
+        lrc_now: lrc_now, // 歌词
+      })
     })
     music.onCanplay((res) => {
       can_play = true
@@ -148,9 +168,43 @@ Page({
     music.stop();
     this.setData({
       musicPercent: 0,
-      music_lrc: '暂无歌词···',
       music_state: true,
+      lrc_near: 0,
+      lrc_now: 0,
     })
+  },
+
+  //点击例句中的单词，显示单词
+  readExampleWord: function (e) {
+    let that = this;
+    let w = e.currentTarget.dataset.i.trim();
+    if (w && w.indexOf(".") != -1) {
+      w = w.substring(0, w.indexOf("."));
+    }
+    if (w && w.indexOf(",") != -1) {
+      w = w.substring(0, w.indexOf(","));
+    }
+    if (w) {
+      app.tools.request({
+        url: 'word/iciba?word=' + w.toLowerCase(),
+        method: "POST",
+        success: function (r9) {
+          let r = r9.data.content.result;
+          let _infoList = r.ponses;
+          let _mp3List = r.prons;
+          if (_infoList.length == 0 && _mp3List.length == 0) {
+            app.tools.toast("当前单词可能是专用名字，无详解···")
+            return
+          }
+          that.setData({
+            word_example: w,
+            infoList_example: _infoList,
+            mp3List_example: _mp3List,
+            show: true // 打开弹窗
+          });
+        }
+      });
+    }
   },
 
   /**

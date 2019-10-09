@@ -85,7 +85,7 @@ Page({
         } else {
           // 已经支付
           wx.navigateTo({
-            url: '/pages/study/book',
+            url: '/pages/book/reads?id=' + id
           })
         }
       }
