@@ -32,17 +32,35 @@ Page({
         let rst = r.data.content.result;
         // 整理例句部分
         if (rst && rst.content) {
-          let _words = [];
-          rst.content.split(" ").map((e)=>{
-            e != '' && _words.push(e + " ")
+          let _words = rst.content;
+          // rst.content.split(" ").map((e)=>{
+          //   e != '' && _words.push(e + " ")
+          // })
+          rst.mainpointsList.map(function(e,i){
+            var reg = new RegExp(e.phrase, 'g')
+            _words = _words.replace(reg, "@#" + e.phrase + "@#")
           })
-          rst.content = _words;
+          let endWord = []
+          _words.split("@#").map(function(e){
+            var state = undefined
+            rst.mainpointsList.map(function (_e, i) {
+              if (_e.phrase == e){
+                state = i
+              }
+            })
+            endWord.push({
+              cls: state != undefined ? 'bloder' : '',
+              text: e,
+              zhExplain: state != undefined ? rst.mainpointsList[state].zhExplain : '',
+            })
+          })
+          // rst.content = _words;
+          console.log(endWord);
           _this.setData({
-            content: rst.content,
+            content: endWord,
             znContent: rst.description,
             title: rst.name
           });
-          console.log(app.data);
         }
       }
     });
@@ -68,32 +86,43 @@ Page({
   //点击例句中的单词，显示单词
   readExampleWord: function (e) {
     let that = this;
-    let w = e.currentTarget.dataset.i.trim();
-    if (w && w.indexOf(".") != -1) {
-      w = w.substring(0, w.indexOf("."));
-    }
-    if (w && w.indexOf(",") != -1) {
-      w = w.substring(0, w.indexOf(","));
-    }
+    let data = that.data.content[e.currentTarget.dataset.i];
+    let w = data.text
+    if (data.cls != "bloder"){return}
+    console.log(w)
+    // if (w && w.indexOf(".") != -1) {
+    //   w = w.substring(0, w.indexOf("."));
+    // }
+    // if (w && w.indexOf(",") != -1) {
+    //   w = w.substring(0, w.indexOf(","));
+    // }
     if (w) {
-      app.tools.request({
-        url: 'word/iciba?word=' + w.toLowerCase(),
-        method: "POST",
-        success: function (r9) {
-          let r = r9.data.content.result;
-          let _infoList = r.ponses;
-          let _mp3List = r.prons;
-          if (_infoList.length == 0 && _mp3List.length == 0) {
-            app.tools.toast("当前单词可能是专用名字，无详解···")
-            return
-          }
-          that.setData({
-            word_example: w,
-            infoList_example: _infoList,
-            mp3List_example: _mp3List,
-            show: true // 打开弹窗
-          });
-        }
+      // 单次查询
+      // app.tools.request({
+      //   url: 'word/iciba?word=' + w.toLowerCase(),
+      //   method: "POST",
+      //   success: function (r9) {
+      //     let r = r9.data.content.result;
+      //     let _infoList = r.ponses;
+      //     let _mp3List = r.prons;
+      //     if (_infoList.length == 0 && _mp3List.length == 0) {
+      //       app.tools.toast("当前单词可能是专用名字，无详解···")
+      //       return
+      //     }
+      //     that.setData({
+      //       word_example: w,
+      //       infoList_example: _infoList,
+      //       mp3List_example: _mp3List,
+      //       show: true // 打开弹窗
+      //     });
+      //   }
+      // });
+      // 短语查询
+      that.setData({
+        word_example: w,
+        infoList_example: [data.zhExplain],
+        mp3List_example: [],
+        show: true // 打开弹窗
       });
     }
   },

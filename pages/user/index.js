@@ -40,7 +40,6 @@ Page({
     } else if (!new RegExp('^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$').test(that.data.email)) {
       app.tools.toast('邮箱格式错误···')
     }else{
-      console.log(this.data)
       wx.showModal({
         title: '警告',
         content: '确定提交，提交之后无法修改！',
@@ -59,7 +58,7 @@ Page({
               },
               success: function (r3) {
                 app.tools.toast('保存成功···')
-                _this.setData({
+                that.setData({
                   show: false
                 })
               },
