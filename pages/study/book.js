@@ -11,6 +11,7 @@ Page({
     tab_active: 0,
     readList: [],
     wordList: [],
+    readTestList: [],
   },
 
   /**
@@ -24,8 +25,20 @@ Page({
     // }
     this.initWord()
     this.initRead()
+    this.initReadTest()
   },
-
+  initReadTest: function(){
+    const _this = this
+    app.tools.request({
+      url: 'reading/getWithGBC',//?grade=' + app.globalData.bookInfo.grade + '&bid=' + app.globalData.bookInfo.bid + '&chapter=' + app.globalData.bookInfo.chapter,
+      method: "POST",
+      success: function (r3) {
+        _this.setData({
+          readTestList: r3.data.content.result
+        });
+      }
+    });
+  },
   initWord: function () {
     const _this = this
     app.tools.request({
@@ -91,7 +104,13 @@ Page({
       }
     })
   },
-
+  openReadTest: function(e){
+    const _this = this
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/book/reads?id=' + id
+    })
+  },
   enoughBalance: function (id) {
     const _this = this;
     app.tools.request({
