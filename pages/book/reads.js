@@ -42,17 +42,31 @@ Page({
           })
           let endWord = []
           _words.split("@#").map(function(e){
+            // 短语
             var state = undefined
             rst.mainpointsList.map(function (_e, i) {
               if (_e.phrase == e){
                 state = i
               }
             })
-            endWord.push({
-              cls: state != undefined ? 'bloder' : '',
-              text: e,
-              zhExplain: state != undefined ? rst.mainpointsList[state].zhExplain : '',
-            })
+            if (state != undefined){
+              endWord.push({
+                cls: 'bloder',
+                text: e,
+                zhExplain: rst.mainpointsList[state].zhExplain,
+              })
+            }else{
+              e.split(" ").map((_e)=>{
+                if (e.trim() != ''){
+                  endWord.push({
+                    cls: '',
+                    text: _e + " ",
+                    zhExplain: '',
+                  })  
+                }
+              })
+            }
+            // 单词
           })
           // rst.content = _words;
           console.log(endWord);
@@ -88,42 +102,45 @@ Page({
     let that = this;
     let data = that.data.content[e.currentTarget.dataset.i];
     let w = data.text
-    if (data.cls != "bloder"){return}
-    console.log(w)
-    // if (w && w.indexOf(".") != -1) {
-    //   w = w.substring(0, w.indexOf("."));
-    // }
-    // if (w && w.indexOf(",") != -1) {
-    //   w = w.substring(0, w.indexOf(","));
-    // }
+    // if (data.cls != "bloder"){return}
+    // console.log(w)
     if (w) {
-      // 单次查询
-      // app.tools.request({
-      //   url: 'word/iciba?word=' + w.toLowerCase(),
-      //   method: "POST",
-      //   success: function (r9) {
-      //     let r = r9.data.content.result;
-      //     let _infoList = r.ponses;
-      //     let _mp3List = r.prons;
-      //     if (_infoList.length == 0 && _mp3List.length == 0) {
-      //       app.tools.toast("当前单词可能是专用名字，无详解···")
-      //       return
-      //     }
-      //     that.setData({
-      //       word_example: w,
-      //       infoList_example: _infoList,
-      //       mp3List_example: _mp3List,
-      //       show: true // 打开弹窗
-      //     });
-      //   }
-      // });
-      // 短语查询
-      that.setData({
-        word_example: w,
-        infoList_example: [data.zhExplain],
-        mp3List_example: [],
-        show: true // 打开弹窗
-      });
+      if (data.zhExplain != ''){
+        // 短语查询
+        that.setData({
+          word_example: w,
+          infoList_example: [data.zhExplain],
+          mp3List_example: [],
+          show: true // 打开弹窗
+        });
+      }else{
+        if (w && w.indexOf(".") != -1) {
+          w = w.substring(0, w.indexOf("."));
+        }
+        if (w && w.indexOf(",") != -1) {
+          w = w.substring(0, w.indexOf(","));
+        }
+        // 单次查询
+        app.tools.request({
+          url: 'word/iciba?word=' + w.toLowerCase(),
+          method: "POST",
+          success: function (r9) {
+            let r = r9.data.content.result;
+            let _infoList = r.ponses;
+            let _mp3List = r.prons;
+            if (_infoList.length == 0 && _mp3List.length == 0) {
+              app.tools.toast("当前单词可能是专用名字，无详解···")
+              return
+            }
+            that.setData({
+              word_example: w,
+              infoList_example: _infoList,
+              mp3List_example: _mp3List,
+              show: true // 打开弹窗
+            });
+          }
+        });
+      }
     }
   },
   /**

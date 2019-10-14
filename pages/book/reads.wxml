@@ -26,15 +26,17 @@
       <!-- 单词 -->
       <text class="title">{{word_example}}</text>
       <!-- 读音 -->
-      <!-- <view class="read">
+      <view class="read" wx:if="{{mp3List_example.length > 0}}">
         <view bindtap='startRead' wx:for="{{mp3List_example}}" wx:key="{{index}}" data-mp3url="{{item.pron}}" data-index="{{index}}" class="word_mp3_item">
           <text>{{item.ps}}</text>
           <van-icon name="volume-o" class="v-btn"/>
         </view>
-      </view> -->
+      </view>
       <!-- 含义 -->
-      <view class="ul">
-        <!-- <view wx:for="{{infoList_example}}" wx:key="{{index}}">{{item.pos}} {{item.acceptation}}</view> -->
+      <view class="ul" wx:if="{{mp3List_example.length > 0}}">
+        <view wx:for="{{infoList_example}}" wx:key="{{index}}">{{item.pos}} {{item.acceptation}}</view>
+      </view>
+      <view class="ul" wx:else>
         <view wx:for="{{infoList_example}}" wx:key="{{index}}">{{item}}</view>
       </view>
     </view>
