@@ -21,7 +21,7 @@
         <view class="li tips">已经到最底部了···</view>
       </view>
     </van-tab>
-    <van-tab title="做题">
+    <van-tab title="阅读理解">
      <view class="ul list">
         <view class="li van-hairline--bottom" wx:for="{{readTestList}}" wx:key="{{index}}" bindtap='openReadTest' data-index='{{index}}'>
             <view class="van-ellipsis">{{index + 1}}</view>

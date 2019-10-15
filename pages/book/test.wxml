@@ -26,4 +26,21 @@
     </view>
     <van-button size="large" round color="rgb(255, 46, 99)" class='submitBtn' bindtap='submit'>提交</van-button>
   </view>
+
+  <!-- 弹窗 -->
+  <van-dialog
+    use-slot
+    show="{{ show }}"
+    confirm-button-text = '返回列表'
+    bind:close="dialogClose"
+  >
+    <view class="card sp header">
+      <text class="title">{{numberTip}}</text>
+      <view class="content" wx:for="{{answerList}}" wx:key="{{index}}">
+        <view>问题{{item.i}}：{{item.q}}</view>
+        <view>正确答案：{{item.answer}}</view>
+        <view>解答：{{item.a}}</view>
+      </view>
+    </view>
+  </van-dialog>
 </view>
