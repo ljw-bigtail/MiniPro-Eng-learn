@@ -1,1 +1,13 @@
 /* pages/book/test.wxss */
+.value-class {
+  flex: none !important;
+}
+
+.submitBtn{display: block; width: 60%; margin: 20rpx auto}
+
+.container{padding: 20rpx}
+.title{font-size: 32rpx; line-height: 40rpx; text-align: center;padding-bottom: 12rpx}
+
+.question{margin-top: 20rpx}
+.question > view{margin-bottom: 20rpx}
+.q_tit{padding-bottom: 20rpx;display: block;}

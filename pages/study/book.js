@@ -30,7 +30,7 @@ Page({
   initReadTest: function(){
     const _this = this
     app.tools.request({
-      url: 'reading/getWithGBC',//?grade=' + app.globalData.bookInfo.grade + '&bid=' + app.globalData.bookInfo.bid + '&chapter=' + app.globalData.bookInfo.chapter,
+      url: 'reading/getWithGBC?grade=' + app.globalData.bookInfo.grade ,//+ '&bid=' + app.globalData.bookInfo.bid + '&chapter=' + app.globalData.bookInfo.chapter,
       method: "POST",
       success: function (r3) {
         _this.setData({
@@ -106,10 +106,20 @@ Page({
   },
   openReadTest: function(e){
     const _this = this
-    let id = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: '/pages/book/reads?id=' + id
+    let index = e.currentTarget.dataset.index;
+    wx.setStorage({
+      key: 'readTestCache',
+      data: _this.data.readTestList[index],
+      success: ()=>{
+        wx.navigateTo({
+          url: '/pages/book/test?id=' + _this.data.readTestList[index].id
+        })
+      },
+      fail: () => {
+        app.tools.toast('跳转失败，请联系客服···')
+      },
     })
+    
   },
   enoughBalance: function (id) {
     const _this = this;

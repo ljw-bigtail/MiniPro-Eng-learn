@@ -1,2 +1,29 @@
 <!--pages/book/test.wxml-->
-<text>pages/book/test.wxml</text>
+
+<!--pages/study/book.wxml-->
+<view class="container">
+  <view class='title'>{{readTest.title}}</view>
+  <rich-text class='content' nodes="{{readTest.enContent}}"></rich-text>
+  <view class='question'>
+    <view wx:for="{{readQuestion}}" wx:key="{{index}}">
+      <text class='q_tit'>{{index+1}}、{{item.description}}</text>
+      <van-radio-group value="{{answer[index].answer2}}" data-index="{{index}}">
+        <van-cell-group>
+          <van-cell title="{{item.optiona}}" value-class="value-class" clickable data-name="A"  data-index="{{index}}" bind:click="onClick">
+            <van-radio name="A" checked-color="rgb(255, 46, 99)"/>
+          </van-cell>
+          <van-cell title="{{item.optionb}}" value-class="value-class" clickable data-name="B"  data-index="{{index}}" bind:click="onClick">
+            <van-radio name="B" checked-color="rgb(255, 46, 99)"/>
+          </van-cell>
+          <van-cell title="{{item.optionc}}" value-class="value-class" clickable data-name="C"  data-index="{{index}}" bind:click="onClick">
+            <van-radio name="C" checked-color="rgb(255, 46, 99)"/>
+          </van-cell>
+          <van-cell title="{{item.optiond}}" value-class="value-class" clickable data-name="D"  data-index="{{index}}" bind:click="onClick">
+            <van-radio name="D" checked-color="rgb(255, 46, 99)"/>
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </view>
+    <van-button size="large" round color="rgb(255, 46, 99)" class='submitBtn' bindtap='submit'>提交</van-button>
+  </view>
+</view>

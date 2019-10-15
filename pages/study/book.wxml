@@ -23,9 +23,9 @@
     </van-tab>
     <van-tab title="做题">
      <view class="ul list">
-        <view class="li van-hairline--bottom" wx:for="{{readTestList}}" wx:key="{{index}}" bindtap='openReadTest' data-id='{{item.id}}'>
+        <view class="li van-hairline--bottom" wx:for="{{readTestList}}" wx:key="{{index}}" bindtap='openReadTest' data-index='{{index}}'>
             <view class="van-ellipsis">{{index + 1}}</view>
-            <view class="van-ellipsis">{{item.name}}</view>
+            <view class="van-ellipsis">{{item.title}}</view>
             <view><van-icon name="arrow" size="20px"/></view>
         </view>
         <view class="li tips">已经到最底部了···</view>
