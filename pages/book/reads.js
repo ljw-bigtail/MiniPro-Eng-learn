@@ -36,7 +36,7 @@ Page({
           // rst.content.split(" ").map((e)=>{
           //   e != '' && _words.push(e + " ")
           // })
-          rst.mainpointsList.map(function(e,i){
+          rst.mainpointsList && rst.mainpointsList.map(function(e,i){
             var reg = new RegExp(e.reg, 'g')
             _words = _words.replace(reg, "@#" + e.reg + "@#")
           })
@@ -45,7 +45,7 @@ Page({
           _words.split("@#").map(function(e){
             // 短语
             var state = undefined
-            rst.mainpointsList.map(function (_e, i) {
+            rst.mainpointsList && rst.mainpointsList.map(function (_e, i) {
               if (_e.reg == e){
                 state = i
               }

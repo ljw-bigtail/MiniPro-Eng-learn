@@ -2,6 +2,9 @@
 
 const app = getApp()
 
+let preReadMony = 0,
+    preWordMony = 0; 
+
 Page({
 
   /**
@@ -23,9 +26,27 @@ Page({
     //   'bid': _this.data.textbookRadio,
     //   'chapter': _this.data.unitRadio
     // }
+    this.initMoney()
     this.initWord()
     this.initRead()
     this.initReadTest()
+  },
+  initMoney: function(){
+    const _this = this
+    app.tools.request({
+      url: 'artical/getPayMoney',
+      method: "POST",
+      success: function (r3) {
+        preReadMony = r3.data.content
+      }
+    });
+    app.tools.request({
+      url: 'word/getPayMoney',
+      method: "POST",
+      success: function (r3) {
+        preWordMony = r3.data.content
+      }
+    });
   },
   initReadTest: function(){
     const _this = this
@@ -65,9 +86,68 @@ Page({
   },
   openWords: function (e) {
     const _this = this
-    // 去单词
-    wx.navigateTo({
-      url: '/pages/book/words?word=' + e.currentTarget.dataset.word
+    let _url = "?grade=" + app.globalData.bookInfo.grade + "&bid=" + app.globalData.bookInfo.bid + "&chapter=" + app.globalData.bookInfo.chapter;
+    app.tools.request({
+      url: 'word/checkWithGBC' + _url,
+      method: "POST",
+      success: function (r1) {
+        var cont = r1.data.content.result;
+        console.log(cont)
+        if (!cont) {
+          // 是否支付
+          wx.showModal({
+            content: '每单元单词教材需要支付' + preWordMony + '学币，是否支付？',
+            showCancel: true,
+            confirmText: '确定',
+            confirmColor: 'rgb(255, 46, 99)',
+            success: function (res) {
+              if (res.confirm) {
+                // 去支付
+                _this.enoughBalanceWord(_url, e.currentTarget.dataset.word);
+              }
+            }
+          })
+        } else {
+          // 已经支付,去单词
+          wx.navigateTo({
+            url: '/pages/book/words?word=' + e.currentTarget.dataset.word,
+          })
+        }
+      }
+    })
+  },
+  enoughBalanceWord: function (_url, word) {
+    const _this = this;
+    app.tools.request({
+      url: 'user/wallet',
+      success: function (r1) {
+        var cont = r1.data.content;
+        if (cont.code == "S") {
+          if (cont.result.balance < 1) {
+            // 去充值
+            app.tools.goToDeposit()
+          } else {
+            // 付款
+            app.tools.request({
+              url: 'word/payWithGBC' + _url,
+              method: "POST",
+              success: function (r1) {
+                var cont = r1.data.content;
+                if (cont) {
+                  // 支付成功了
+                  app.tools.toast('支付成功，正在打开课本···')
+                  wx.navigateTo({
+                    url: '/pages/book/words?word=' + word,
+                  })
+                } else {
+                  // 支付异常
+                  app.tools.toast('支付失败，请联系客服···')
+                }
+              }
+            });
+          }
+        }
+      }
     });
   },
   openReads: function(e){
@@ -84,7 +164,7 @@ Page({
         if (!cont) {
           // 是否支付
           wx.showModal({
-            content: '该阅读尚未支付学币，是否支付？',
+            content: '每篇阅读需要支付' + preReadMony+'学币，是否支付？',
             showCancel: true,
             confirmText: '确定',
             confirmColor: 'rgb(255, 46, 99)',

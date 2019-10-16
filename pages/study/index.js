@@ -37,35 +37,8 @@ Page({
     if (app.globalData.userInfo){
       if (this.data.book){
         // 去学习
-        const _this = this
-        let _url = "?grade=" + app.globalData.bookInfo.grade + "&bid=" + app.globalData.bookInfo.bid + "&chapter=" + app.globalData.bookInfo.chapter;
-        app.tools.request({
-          url: 'word/checkWithGBC' + _url,
-          method: "POST",
-          success: function (r1) {
-            var cont = r1.data.content.result;
-            console.log(cont)
-            if (!cont) {
-              // 是否支付
-              wx.showModal({
-                content: '该阅读尚未支付学币，是否支付？',
-                showCancel: true,
-                confirmText: '确定',
-                confirmColor: 'rgb(255, 46, 99)',
-                success: function (res) {
-                  if (res.confirm) {
-                    // 去支付
-                    _this.enoughBalance(_url);
-                  }
-                }
-              })
-            } else {
-              // 已经支付
-              wx.navigateTo({
-                url: '/pages/study/book',
-              })
-            }
-          }
+        wx.navigateTo({
+          url: '/pages/study/book',
         })
       }else{
         app.tools.toast('请先选择教材···')
@@ -74,44 +47,40 @@ Page({
       app.tools.goToLogin()
     }
   },
-  enoughBalance: function (_url) {
-    const _this = this;
-    app.tools.request({
-      url: 'user/wallet',
-      success: function (r1) {
-        var cont = r1.data.content;
-        if (cont.code == "S") {
-          if (cont.result.balance < 1) {
-            // 去充值
-            app.tools.goToDeposit()
-          } else {
-            // 付款
-            _this.pay(_url);
-          }
-        }
-      }
-    });
-  },
-  pay: function (_url) {
-    const _this = this;
-    app.tools.request({
-      url: 'word/payWithGBC' + _url,
-      method: "POST",
-      success: function (r1) {
-        var cont = r1.data.content;
-        if (cont) {
-          // 支付成功了
-          app.tools.toast('支付成功，正在打开课本···')
-          wx.navigateTo({
-            url: '/pages/study/book',
-          })
-        } else {
-          // 支付异常
-          app.tools.toast('支付失败，请联系客服···')
-        }
-      }
-    });
-  },
+  // enoughBalance: function (_url) {
+  //   const _this = this;
+  //   app.tools.request({
+  //     url: 'user/wallet',
+  //     success: function (r1) {
+  //       var cont = r1.data.content;
+  //       if (cont.code == "S") {
+  //         if (cont.result.balance < 1) {
+  //           // 去充值
+  //           app.tools.goToDeposit()
+  //         } else {
+  //           // 付款
+  //           app.tools.request({
+  //             url: 'word/payWithGBC' + _url,
+  //             method: "POST",
+  //             success: function (r1) {
+  //               var cont = r1.data.content;
+  //               if (cont) {
+  //                 // 支付成功了
+  //                 app.tools.toast('支付成功，正在打开课本···')
+  //                 wx.navigateTo({
+  //                   url: '/pages/study/book',
+  //                 })
+  //               } else {
+  //                 // 支付异常
+  //                 app.tools.toast('支付失败，请联系客服···')
+  //               }
+  //             }
+  //           });
+  //         }
+  //       }
+  //     }
+  //   });
+  // },
   gradeChange(event) {
     this.setData({
       gradeRadio: event.detail
@@ -229,12 +198,12 @@ Page({
             'value': data,
           }
           // app.tools.toast('设置成功，现在去学习···')
-          setTimeout(function(){
+          // setTimeout(function(){
             _this.openBook()
             // wx.navigateTo({
             //   url: '/pages/study/book',
             // })
-          }, 1500)
+          // }, 1500)
         }else{
           app.tools.toast('设置失败，请联系客服···')
         }
