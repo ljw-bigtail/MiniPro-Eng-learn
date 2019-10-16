@@ -15,15 +15,68 @@ Page({
 
     show: false, // 翻译弹窗
     numberTip: '',
+
+    readingId: '',
+
+    btnShow: false,
+
+    dialogState: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initReadTest(options.id.trim())
-    this.initReadTestQuestion(options.id.trim()) 
+    this.setData({
+      readingId: options.id.trim()
+    });
+    this.initReadTest(this.data.readingId)
+    this.initReadTestQuestion(this.data.readingId) 
+    this.initLast() 
   },
+
+  initLast: function () {
+    const _this = this
+    app.tools.request({
+      url: 'reading/submitRecords?readingId=' + _this.data.readingId,
+      method: "POST",
+      success: function (r) {
+        if (r.data.content.result.length > 0){
+          _this.setData({
+            historyAnswer: r.data.content.result[0],
+            btnShow: true
+          });
+        }
+      }
+    });
+  },
+  getLast: function(){
+    const _this = this
+    app.tools.request({
+      url: 'reading/recordDetails?recordId=' + _this.data.historyAnswer.id,
+      method: "POST",
+      success: function (r) {
+        let answerList = []
+        r.data.content.result.map(function (e, i) {
+          // if (e.ansresult != 'R') {
+            answerList.push({
+              i: i,
+              q: e.readingCpsQuestion.description,
+              a: e.readingCpsQuestion.explain + (e.ansresult != 'R' ? '（回答正确）' : '（回答错误）'),
+              answer: e.readingCpsQuestion.answer,
+            })
+          // }
+        })
+        _this.setData({
+          numberTip: '最近一次提交时间：' + r.data.content.result[0].createDate,
+          show: true,
+          answerList: answerList,
+          dialogState: true
+        });
+      }
+    });
+  },
+
   initReadTest: function(id){
     // 8A2E96A9B05AAB65D8034B396280B1B2
     const _this = this
@@ -92,13 +145,16 @@ Page({
           numberTip: '回答正确数：' + r.data.content.result.result1 + '，回答错误数：' + r.data.content.result.result2,
           show: true,
           answerList: answerList,
+          dialogState: false
         });
-        console.log(_this.data)
+        // console.log(_this.data)
       }
     });
   },
   dialogClose: function(){
-    wx.navigateBack()
+    if (!this.data.dialogState){
+      wx.navigateBack()
+    }
   },
   onClick(event) {
     const _this = this

@@ -10,7 +10,7 @@
 
 .question{margin-top: 20rpx}
 .question > view{margin-bottom: 20rpx}
-.q_tit{padding-bottom: 20rpx;display: block;}
+.q_tit{padding-bottom: 20rpx;display: block;word-break: normal; word-wrap: break-word}
 
 /* page{min-height: 100vh; background: #eaeaea} */
 
