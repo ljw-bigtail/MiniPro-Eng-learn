@@ -37,15 +37,16 @@ Page({
           //   e != '' && _words.push(e + " ")
           // })
           rst.mainpointsList.map(function(e,i){
-            var reg = new RegExp(e.phrase, 'g')
-            _words = _words.replace(reg, "@#" + e.phrase + "@#")
+            var reg = new RegExp(e.reg, 'g')
+            _words = _words.replace(reg, "@#" + e.reg + "@#")
           })
           let endWord = []
+          // console.log(_words)
           _words.split("@#").map(function(e){
             // 短语
             var state = undefined
             rst.mainpointsList.map(function (_e, i) {
-              if (_e.phrase == e){
+              if (_e.reg == e){
                 state = i
               }
             })
@@ -54,6 +55,7 @@ Page({
                 cls: 'bloder',
                 text: e,
                 zhExplain: rst.mainpointsList[state].zhExplain,
+                phrase: rst.mainpointsList[state].phrase,
               })
             }else{
               e.split(" ").map((_e)=>{
@@ -62,6 +64,7 @@ Page({
                     cls: '',
                     text: _e + " ",
                     zhExplain: '',
+                    phrase: '',
                   })  
                 }
               })
@@ -69,7 +72,7 @@ Page({
             // 单词
           })
           // rst.content = _words;
-          console.log(endWord);
+          // console.log(endWord);
           _this.setData({
             content: endWord,
             znContent: rst.description,
@@ -103,13 +106,13 @@ Page({
     let data = that.data.content[e.currentTarget.dataset.i];
     let w = data.text
     // if (data.cls != "bloder"){return}
-    // console.log(w)
+    // console.log(e.currentTarget.dataset.i, data)
     if (w) {
-      if (data.zhExplain != ''){
+      if (data.cls == "bloder"){
         // 短语查询
         that.setData({
-          word_example: w,
-          infoList_example: [data.zhExplain],
+          word_example: data.phrase,
+          infoList_example: [data.zhExplain || '翻译内容未设置···'],
           mp3List_example: [],
           show: true // 打开弹窗
         });
