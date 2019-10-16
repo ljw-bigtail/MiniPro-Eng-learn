@@ -6,7 +6,7 @@ let lrc = {},
     update_timer_interval = 500,
 // TODO  社区里说是安卓在250ms | 500ms ,ios 在1000ms ,如果ios测试后的确与安卓不一致，需要根据系统做区分，建议值大100ms
     can_play = false,
-    screenClose = 0
+    screenClose = 0;
 
 Page({
 
@@ -34,6 +34,7 @@ Page({
    */
   onLoad: function (options) {
     const _this = this
+    lrc_data = []
     // 播放音乐
     app.tools.request({
       url: 'media/' + options.id,
