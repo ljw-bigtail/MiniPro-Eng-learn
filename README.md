@@ -1,28 +1,7 @@
-# mini-demo
-小程序-英语邦
+# 小程序-英语邦
 
+英语学习小程序
 
-"tabBar": {
-  "color": "#BFBFBF",
-  "selectedColor": "#252a34",
-  "list": [
-    {
-      "pagePath": "pages/index/index",
-      "iconPath": "img/home-0.png",
-      "selectedIconPath": "img/home-0.png",
-      "text": "首页"
-    },
-    {
-      "pagePath": "pages/study/index",
-      "iconPath": "img/study-0.png",
-      "selectedIconPath": "img/study-1.png",
-      "text": "学习中心"
-    },
-    {
-      "pagePath": "pages/user/index",
-      "iconPath": "img/user-0.png",
-      "selectedIconPath": "img/user-1.png",
-      "text": "我的"
-    }
-  ]
-},
+包含 新闻、歌曲、课本、阅读理解、学币、学籍等部分
+
+其中，英文歌曲部分支持点击单词查询译文等，课本包含 单词、阅读等学习，阅读理解包含做题改题等操作、学币包含充值、支付等功能
