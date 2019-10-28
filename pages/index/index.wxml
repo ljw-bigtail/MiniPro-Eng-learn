@@ -14,11 +14,12 @@
   <van-tabs sticky active="{{ tab_active }}" bind:change="onChange" animated swipeable color="rgb(255, 46, 99)">
     <van-tab title="经典歌曲">
       <view class="ul musicList">
-        <view class="li van-hairline--bottom" wx:for="{{songsList}}" wx:key="index" data-id="{{item.mid}}" data-fdid="{{item.fdid}}" bindtap="openSong">
+        <view class="li van-hairline--bottom" wx:for="{{songsList}}" wx:key="index">
           <!-- <navigator url="/pages/songs/index?id={{item.id}}"> -->
-            <view class="van-ellipsis">{{index + 1}}</view>
-            <view class="van-ellipsis">{{item.name}}</view>
-            <view><van-icon name="music-o" size="20px"/></view>
+            <view class="van-ellipsis" data-id="{{item.mid}}" data-fdid="{{item.fdid}}" bindtap="openSong">{{index + 1}}</view>
+            <view class="van-ellipsis" data-id="{{item.mid}}" data-fdid="{{item.fdid}}" bindtap="openSong">{{item.name}}</view>
+            <view bindtap='openSongWord'  data-fdid="{{item.fdid}}"><van-icon name="info-o" size="20px"/></view>
+            <view data-id="{{item.mid}}" data-fdid="{{item.fdid}}" bindtap="openSong"><van-icon name="music-o" size="20px"/></view>
           <!-- </navigator>  -->
         </view>
         <view class="li btn" wx:if="{{musicListOver}}" bindtap='nextMusicPage'>加载更多</view>
@@ -44,4 +45,20 @@
     <van-tabbar-item icon="newspaper-o">学习中心</van-tabbar-item>
     <van-tabbar-item icon="manager-o">我的</van-tabbar-item>
   </van-tabbar>
+
+  <van-dialog
+    use-slot
+    title="歌词"
+    show="{{ show }}"
+    confirm-button-text = '关闭'
+    bind:close="dialogClose"
+  >
+    <view class="card">
+      <scroll-view class='lrc' scroll-y>
+        <view class="lrc_line" wx:for="{{lrc_data}}" wx:key="index">
+          <text class="text" wx:for="{{item.data}}" data-i="{{item_i}}" wx:for-item="item_i" wx:for-index="i" wx:key="i">{{item_i}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  </van-dialog>
 </view>

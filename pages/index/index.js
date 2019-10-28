@@ -28,6 +28,9 @@ Page({
     songsList: [],
     newsList: [],
 
+    show: false,
+    lrc_data: [],
+
     musicListOver: true,
     musicPage: 1,
 
@@ -72,6 +75,41 @@ Page({
     wx.navigateTo({
       url: '/pages/songs/index?id=' + id + '&fdid=' + fdid
     });
+  },
+  openSongWord: function(e){
+    let fdid = e.currentTarget.dataset.fdid;
+    const _this = this
+    let lrc_data = []
+    // 歌词
+    app.tools.request({
+      url: 'song/lyric?id=' + fdid,
+      method: "POST",
+      success: function (r5) {
+        if (r5.data.content && r5.data.content.length > 0) {
+          r5.data.content.map((e, index) => {
+            for (var i in e) {
+              lrc_data.push({
+                data: e[i].split(' '),
+                time: i - 0
+              })
+            }
+          })
+          _this.setData({
+            show: true,
+            lrc_data: lrc_data
+          })
+        } else {
+          _this.setData({
+            show:true,
+            lrc_data: [{
+              data: [['暂无歌词···']],
+              time: 1000
+            }]
+          })
+        }
+      }
+    });
+    return false
   },
   initNews: function(){
     const _this = this

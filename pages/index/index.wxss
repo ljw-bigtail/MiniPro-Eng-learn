@@ -9,4 +9,11 @@
 .ul .li.btn{padding: 20rpx 0; margin: 40rpx 0; text-align: center; font-size: 24rpx; color: #eaeaea;display: block; background: rgb(255, 46, 99);border-radius: 40rpx}
 .ul .li > view:nth-child(1){font-size: 24rpx; line-height: 24rpx; padding: 0 20rpx; min-width: 64rpx;overflow: hidden}
 .ul .li > view:nth-child(2){flex: 1; font-size: 32rpx;}
-.ul .li > view:nth-child(3){height: 40rpx;}
+.ul .li > view:nth-child(3){height: 40rpx;margin-right: 6px}
+.ul .li > view:nth-child(4){height: 40rpx;}
+
+.card{height: 60vh}
+.lrc{overflow-y: auto; height: 100%; position: relative; z-index: 10; width: 100%}
+.lrc_line{display: block; margin: 60rpx 20rpx; font-size: 28rpx; text-align: center;}
+.lrc_line.active text{color: rgb(255, 46, 99); font-weight: bold}
+.lrc_line text{padding-right: 8rpx}

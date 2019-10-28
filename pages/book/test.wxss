@@ -7,6 +7,7 @@
 
 .container{padding: 20rpx}
 .title{font-size: 32rpx; line-height: 40rpx; text-align: center;padding-bottom: 12rpx}
+.source{font-size: 28rpx; line-height: 40rpx; text-align: center;padding-bottom: 12rpx}
 
 .question{margin-top: 20rpx}
 .question > view{margin-bottom: 20rpx}

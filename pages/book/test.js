@@ -80,6 +80,25 @@ Page({
   initReadTest: function(id){
     // 8A2E96A9B05AAB65D8034B396280B1B2
     const _this = this
+    // app.tools.request({
+    //   url: 'reading/getWithGBC?grade=' + app.globalData.bookInfo.grade + '&bid=' + app.globalData.bookInfo.bid + '&chapter=' + app.globalData.bookInfo.chapter,
+    //   method: "POST",
+    //   success: function (r) {
+    //     console.log(r)
+    //     // let answer = []
+    //     // r.data.content.result.map(function (e) {
+    //     //   answer.push({
+    //     //     answer2: '',
+    //     //     reqid: e.id,
+    //     //   })
+    //     // })
+    //     // _this.setData({
+    //     //   readQuestion: r.data.content.result,
+    //     //   answer: answer
+    //     // });
+    //   }
+    // });
+    // return;
     wx.getStorage({
       key: 'readTestCache',
       success: (res) => {
