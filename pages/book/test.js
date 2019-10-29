@@ -20,9 +20,63 @@ Page({
 
     btnShow: false,
 
-    dialogState: true
-  },
+    dialogState: true,
 
+    e_show: false,
+    content: null,
+    znContent: null,
+    title: null,
+    word_example: null,
+    infoList_example: null,
+    mp3List_example: null,
+  },
+  readExampleWord: function (e) {
+    let that = this;
+    let data = that.data.content[e.currentTarget.dataset.i];
+    console.log(data)
+    let w = data.text
+    // if (data.cls != "bloder"){return}
+    // console.log(e.currentTarget.dataset.i, data)
+    if (w) {
+      if (data.cls == "bloder") {
+        // 短语查询
+        that.setData({
+          word_example: data.phrase,
+          infoList_example: [data.zhExplain || '翻译内容未设置···'],
+          mp3List_example: [],
+          e_show: true // 打开弹窗
+        });
+      } else {
+        if (w && w.indexOf(".") != -1) {
+          w = w.substring(0, w.indexOf("."));
+        }
+        if (w && w.indexOf(",") != -1) {
+          w = w.substring(0, w.indexOf(","));
+        }
+        // 单次查询
+        app.tools.request({
+          url: 'word/iciba?word=' + w.toLowerCase(),
+          method: "POST",
+          success: function (r9) {
+            let r = r9.data.content.result;
+            let _infoList = r.ponses;
+            let _mp3List = r.prons;
+            if (_infoList.length == 0 && _mp3List.length == 0) {
+              app.tools.toast("当前单词可能是专用名字，无详解···")
+              return
+            }
+            that.setData({
+              word_example: w,
+              infoList_example: _infoList,
+              mp3List_example: _mp3List,
+              e_show: true // 打开弹窗
+            });
+            console.log(that.data)
+          }
+        });
+      }
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -48,6 +102,14 @@ Page({
           });
         }
       }
+    });
+  },
+  // 读音
+  startRead: function (e) {
+    let that = this;
+    let url = e.currentTarget.dataset.mp3url;
+    wx.playBackgroundAudio({
+      dataUrl: url,
     });
   },
   getLast: function(){
@@ -80,31 +142,58 @@ Page({
   initReadTest: function(id){
     // 8A2E96A9B05AAB65D8034B396280B1B2
     const _this = this
-    // app.tools.request({
-    //   url: 'reading/getWithGBC?grade=' + app.globalData.bookInfo.grade + '&bid=' + app.globalData.bookInfo.bid + '&chapter=' + app.globalData.bookInfo.chapter,
-    //   method: "POST",
-    //   success: function (r) {
-    //     console.log(r)
-    //     // let answer = []
-    //     // r.data.content.result.map(function (e) {
-    //     //   answer.push({
-    //     //     answer2: '',
-    //     //     reqid: e.id,
-    //     //   })
-    //     // })
-    //     // _this.setData({
-    //     //   readQuestion: r.data.content.result,
-    //     //   answer: answer
-    //     // });
-    //   }
-    // });
-    // return;
     wx.getStorage({
       key: 'readTestCache',
       success: (res) => {
         _this.setData({
           readTest: res.data
         });
+        if (res.data) {
+          let _words = res.data.enContent;
+          res.data.mainpointsList && res.data.mainpointsList.map(function (e, i) {
+            var reg = new RegExp(e.reg, 'g')
+            _words = _words.replace(reg, "@#" + e.reg + "@#")
+          })
+          let endWord = []
+          // console.log(_words)
+          _words.split("@#").map(function (e) {
+            // 短语
+            var state = undefined
+            res.data.mainpointsList && res.data.mainpointsList.map(function (_e, i) {
+              if (_e.reg == e) {
+                state = i
+              }
+            })
+            if (state != undefined) {
+              endWord.push({
+                cls: 'bloder',
+                text: e,
+                zhExplain: res.data.mainpointsList[state].zhExplain,
+                phrase: res.data.mainpointsList[state].phrase,
+              })
+            } else {
+              e.split(" ").map((_e) => {
+                if (e.trim() != '') {
+                  endWord.push({
+                    cls: '',
+                    text: _e + " ",
+                    zhExplain: '',
+                    phrase: '',
+                  })
+                }
+              })
+            }
+            // 单词
+          })
+          // rst.content = _words;
+          // console.log(endWord);
+          _this.setData({
+            content: endWord,
+            znContent: res.data.description,
+            title: res.data.name
+          });
+        }
+        console.log(_this.data.readTest)
       },
       fail: () => {
         app.tools.toast('读取失败，请联系客服···')

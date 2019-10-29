@@ -4,7 +4,10 @@
 <view class="container">
   <view class='title'>{{readTest.title}}</view>
   <view class='source'>{{readTest.source}}</view>
-  <rich-text class='content' nodes="{{readTest.enContent}}"></rich-text>
+  <!-- <rich-text class='content' nodes="{{readTest.enContent}}"></rich-text> -->
+  <view class="card con">
+    <text wx:for="{{content}}" wx:key="{{index}}" bindtap='readExampleWord' data-i="{{index}}" class="{{item.cls}}">{{item.text}}</text>
+  </view>
   <view class='question'>
     <view wx:for="{{readQuestion}}" wx:key="{{index}}">
       <text class='q_tit'>{{index+1}}、{{item.description}}</text>
@@ -42,6 +45,35 @@
         <view>问题{{item.i+1}}：{{item.q}}</view>
         <view>正确答案：{{item.answer}}</view>
         <view>解答：{{item.a}}</view>
+      </view>
+    </view>
+  </van-dialog>
+
+
+
+  <!-- 翻译弹窗 -->
+  <van-dialog
+    use-slot
+    show="{{ e_show }}"
+    confirm-button-text = '返回'
+    bind:close="dialogClose"
+  >
+    <view class="card sp header">
+      <!-- 单词 -->
+      <text class="title">{{word_example}}</text>
+      <!-- 读音 -->
+      <view class="read" wx:if="{{mp3List_example.length > 0}}">
+        <view bindtap='startRead' wx:for="{{mp3List_example}}" wx:key="{{index}}" data-mp3url="{{item.pron}}" data-index="{{index}}" class="word_mp3_item">
+          <text>{{item.ps}}</text>
+          <van-icon name="volume-o" class="v-btn"/>
+        </view>
+      </view>
+      <!-- 含义 -->
+      <view class="ul" wx:if="{{mp3List_example.length > 0}}">
+        <view wx:for="{{infoList_example}}" wx:key="{{index}}">{{item.pos}} {{item.acceptation}}</view>
+      </view>
+      <view class="ul" wx:else>
+        <view wx:for="{{infoList_example}}" wx:key="{{index}}">{{item}}</view>
       </view>
     </view>
   </van-dialog>
