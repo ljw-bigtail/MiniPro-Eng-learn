@@ -34,6 +34,11 @@ Page({
     musicListOver: true,
     musicPage: 1,
 
+    wordShow: false,
+    word_example: null,
+    infoList_example: null,
+    mp3List_example: null,
+
     // newsListOver: true,
   },
   onLoad: function () {
@@ -45,6 +50,45 @@ Page({
         _this.initNews()
       }
     })
+  },
+  startRead: function (e) {
+    let that = this;
+    let url = e.currentTarget.dataset.mp3url;
+    wx.playBackgroundAudio({
+      dataUrl: url,
+    });
+  },
+  //点击例句中的单词，显示单词
+  readExampleWord: function (e) {
+    let that = this;
+    let w = e.currentTarget.dataset.i.trim();
+    if (w && w.indexOf(".") != -1) {
+      w = w.substring(0, w.indexOf("."));
+    }
+    if (w && w.indexOf(",") != -1) {
+      w = w.substring(0, w.indexOf(","));
+    }
+    if (w) {
+      app.tools.request({
+        url: 'word/iciba?word=' + w.toLowerCase(),
+        method: "POST",
+        success: function (r9) {
+          let r = r9.data.content.result;
+          let _infoList = r.ponses;
+          let _mp3List = r.prons;
+          if (_infoList.length == 0 && _mp3List.length == 0) {
+            app.tools.toast("当前单词可能是专用名字，无详解···")
+            return
+          }
+          that.setData({
+            word_example: w,
+            infoList_example: _infoList,
+            mp3List_example: _mp3List,
+            wordShow: true // 打开弹窗
+          });
+        }
+      });
+    }
   },
   nextMusicPage: function(){
     const _this = this

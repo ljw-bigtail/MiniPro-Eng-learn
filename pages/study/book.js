@@ -3,7 +3,8 @@
 const app = getApp()
 
 let preReadMony = 0,
-    preWordMony = 0; 
+    preWordMony = 0,
+    preReadingMony = 0; 
 
 Page({
 
@@ -45,6 +46,13 @@ Page({
       method: "POST",
       success: function (r3) {
         preWordMony = r3.data.content
+      }
+    });
+    app.tools.request({
+      url: 'reading/getPayMoney',
+      method: "POST",
+      success: function (r3) {
+        preReadingMony = r3.data.content
       }
     });
   },
@@ -154,14 +162,11 @@ Page({
     // 付费
     const _this = this
     let id = e.currentTarget.dataset.id;
-
     app.tools.request({
       url: 'artical/checPayed?aid=' + id,
       method: "POST",
       success: function (r1) {
-        var cont = r1.data.content.result;
-        console.log(cont)
-        if (!cont) {
+        if (!r1.data.content.result) {
           // 是否支付
           wx.showModal({
             content: '每篇阅读需要支付' + preReadMony+'学币，是否支付？',
@@ -171,7 +176,24 @@ Page({
             success: function (res) {
               if (res.confirm) {
                 // 去支付
-                _this.enoughBalance(id);
+                _this.enoughBalance(function(){
+                  app.tools.request({
+                    url: 'artical/pay?aid=' + id,
+                    method: "POST",
+                    success: function (r2) {
+                      if (r2.data.content) {
+                        // 支付成功了
+                        app.tools.toast('支付成功，正在打开课本···')
+                        wx.navigateTo({
+                          url: '/pages/book/reads?id=' + id
+                        })
+                      } else {
+                        // 支付异常
+                        app.tools.toast('支付失败，请联系客服···')
+                      }
+                    }
+                  });
+                });
               }
             }
           })
@@ -185,23 +207,64 @@ Page({
     })
   },
   openReadTest: function(e){
+    // 付费
     const _this = this
     let index = e.currentTarget.dataset.index;
+    let data = _this.data.readTestList[index];
+    app.tools.request({
+      url: 'reading/checPayed?readingId=' + data.id,
+      method: "POST",
+      success: function (r1) {
+        if (!r1.data.content.result) {
+          // 是否支付
+          wx.showModal({
+            content: '每篇阅读需要支付' + preReadingMony + '学币，是否支付？',
+            showCancel: true,
+            confirmText: '确定',
+            confirmColor: 'rgb(255, 46, 99)',
+            success: function (res) {
+              if (res.confirm) {
+                // 去支付
+                _this.enoughBalance(function(){
+                  app.tools.request({
+                    url: 'reading/pay?readingId=' + data.id,
+                    method: "POST",
+                    success: function (r2) {
+                      if (r2.data.content) {
+                        // 支付成功了
+                        _this.openReadTestUrl(data)
+                      } else {
+                        // 支付异常
+                        app.tools.toast('支付失败，请联系客服···')
+                      }
+                    }
+                  });
+                });
+              }
+            }
+          })
+        } else {
+          // 已经支付
+          _this.openReadTestUrl(data)
+        }
+      }
+    })
+  },
+  openReadTestUrl: function(data){
     wx.setStorage({
       key: 'readTestCache',
-      data: _this.data.readTestList[index],
-      success: ()=>{
+      data: data,
+      success: () => {
         wx.navigateTo({
-          url: '/pages/book/test?id=' + _this.data.readTestList[index].id
+          url: '/pages/book/test?id=' + data.id
         })
       },
       fail: () => {
         app.tools.toast('跳转失败，请联系客服···')
       },
     })
-    
   },
-  enoughBalance: function (id) {
+  enoughBalance: function (callback) {
     const _this = this;
     app.tools.request({
       url: 'user/wallet',
@@ -213,31 +276,14 @@ Page({
             app.tools.goToDeposit()
           } else {
             // 付款
-            _this.pay(id);
+            callback && callback()
           }
         }
       }
     });
   },
   pay: function (id) {
-    const _this = this;
-    app.tools.request({
-      url: 'artical/pay?aid=' + id,
-      method: "POST",
-      success: function (r1) {
-        var cont = r1.data.content;
-        if (cont) {
-          // 支付成功了
-          app.tools.toast('支付成功，正在打开课本···')
-          wx.navigateTo({
-            url: '/pages/book/reads?id=' + id
-          })
-        } else {
-          // 支付异常
-          app.tools.toast('支付失败，请联系客服···')
-        }
-      }
-    });
+    
   },
 
   /**
