@@ -7,5 +7,5 @@
 .ul .li > view:nth-child(2){flex: 1; font-size: 32rpx;}
 .ul .li > view:nth-child(3){height: 40rpx;}
 
-.li_havdes text{display: block;}
-.li_havdes text:last-child{font-size: 22rpx;color: #999}
+.li_havdes view{font-size: 22rpx;color: #999}
+.li_havdes view:first-child{font-size: 32rpx;color: #252a34}
