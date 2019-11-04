@@ -218,7 +218,7 @@ Page({
         if (!r1.data.content.result) {
           // 是否支付
           wx.showModal({
-            content: '每篇阅读需要支付' + preReadingMony + '学币，是否支付？',
+            content: '每篇阅读理解需要支付' + preReadingMony + '学币，是否支付？',
             showCancel: true,
             confirmText: '确定',
             confirmColor: 'rgb(255, 46, 99)',

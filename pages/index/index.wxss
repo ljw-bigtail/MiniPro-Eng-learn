@@ -29,3 +29,6 @@
 
 .card.header .ul{color: #fff;background: transparent}
 .card.header .ul view{font-size: 28rpx; margin-bottom: 20rpx; line-height: 32rpx;}
+
+.li_havdes view{font-size: 22rpx;color: #999}
+.li_havdes view:first-child{font-size: 32rpx;color: #252a34}
