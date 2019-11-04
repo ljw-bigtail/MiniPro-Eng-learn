@@ -23,3 +23,5 @@ page{min-height: 100vh; background: #eaeaea}
 .card.header .ul view{font-size: 28rpx; margin-bottom: 20rpx; line-height: 32rpx;}
 
 .tips{padding: 40rpx 0 60rpx; text-align: center; font-size: 24rpx; color: #fff;display: block;}
+
+.simple_btn{text-align: right; text-decoration: underline; line-height: 32rpx; color: rgb(255, 46, 99); padding: 12rpx}

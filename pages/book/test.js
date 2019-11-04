@@ -24,19 +24,30 @@ Page({
 
     e_show: false,
     content: null,
+    content_no_phrase: null,
     znContent: null,
     title: null,
     word_example: null,
     infoList_example: null,
     mp3List_example: null,
+
+    havPhrase: true
+  },
+  toggleHavPhrase: function(){
+    let that = this;
+    that.setData({
+      havPhrase: !that.data.havPhrase
+    })
   },
   readExampleWord: function (e) {
     let that = this;
-    let data = that.data.content[e.currentTarget.dataset.i];
-    console.log(data)
+    let data
+    if (e.currentTarget.dataset.type == 0){
+      data = that.data.content[e.currentTarget.dataset.i];
+    }else{
+      data = that.data.content_no_phrase[e.currentTarget.dataset.i];
+    }
     let w = data.text
-    // if (data.cls != "bloder"){return}
-    // console.log(e.currentTarget.dataset.i, data)
     if (w) {
       if (data.cls == "bloder") {
         // 短语查询
@@ -71,7 +82,6 @@ Page({
               mp3List_example: _mp3List,
               e_show: true // 打开弹窗
             });
-            console.log(that.data)
           }
         });
       }
@@ -155,7 +165,6 @@ Page({
             _words = _words.replace(reg, "@#" + e.reg + "@#")
           })
           let endWord = []
-          // console.log(_words)
           _words.split("@#").map(function (e) {
             // 短语
             var state = undefined
@@ -185,15 +194,23 @@ Page({
             }
             // 单词
           })
-          // rst.content = _words;
-          // console.log(endWord);
+          // 没有短语的
+          let endWord_no = [];
+          res.data.enContent.split(" ").map((e)=>{
+            e != '' && endWord_no.push({
+              cls: '',
+              text: e + " ",
+              zhExplain: '',
+              phrase: '',
+            })
+          })
           _this.setData({
+            content_no_phrase: endWord_no,
             content: endWord,
             znContent: res.data.description,
             title: res.data.name
           });
         }
-        console.log(_this.data.readTest)
       },
       fail: () => {
         app.tools.toast('读取失败，请联系客服···')

@@ -12,6 +12,7 @@ Page({
     mp3List_example: null,
 
     content: null,
+    content_no_phrase: null,
     znContent: null,
     title: null,
     showCN: false
@@ -71,9 +72,20 @@ Page({
             }
             // 单词
           })
+          // 没有短语的
+          let endWord_no = [];
+          rst.content.split(" ").map((e) => {
+            e != '' && endWord_no.push({
+              cls: '',
+              text: e + " ",
+              zhExplain: '',
+              phrase: '',
+            })
+          })
           // rst.content = _words;
           // console.log(endWord);
           _this.setData({
+            content_no_phrase: endWord_no,
             content: endWord,
             znContent: rst.description,
             title: rst.name
@@ -81,6 +93,12 @@ Page({
         }
       }
     });
+  },
+  toggleHavPhrase: function () {
+    let that = this;
+    that.setData({
+      havPhrase: !that.data.havPhrase
+    })
   },
   openCN: function () {
     this.setData({
@@ -103,7 +121,12 @@ Page({
   //点击例句中的单词，显示单词
   readExampleWord: function (e) {
     let that = this;
-    let data = that.data.content[e.currentTarget.dataset.i];
+    let data
+    if (e.currentTarget.dataset.type == 0) {
+      data = that.data.content[e.currentTarget.dataset.i];
+    } else {
+      data = that.data.content_no_phrase[e.currentTarget.dataset.i];
+    }
     let w = data.text
     // if (data.cls != "bloder"){return}
     // console.log(e.currentTarget.dataset.i, data)

@@ -5,9 +5,14 @@
   <view class='title'>{{readTest.title}}</view>
   <view class='source'>{{readTest.source}}</view>
   <!-- <rich-text class='content' nodes="{{readTest.enContent}}"></rich-text> -->
-  <view class="card con">
-    <text wx:for="{{content}}" wx:key="{{index}}" bindtap='readExampleWord' data-i="{{index}}" class="{{item.cls}}">{{item.text}}</text>
+  <view class="card con" wx:if="{{havPhrase}}">
+    <text wx:for="{{content}}" wx:key="{{index}}" bindtap='readExampleWord' data-type="0" data-i="{{index}}" class="{{item.cls}}">{{item.text}}</text>
   </view>
+  <view class="card con" wx:else>
+    <text wx:for="{{content_no_phrase}}" wx:key="{{index}}" bindtap='readExampleWord' data-type="1" data-i="{{index}}" class="{{item.cls}}">{{item.text}}</text>
+  </view>
+  <view class='simple_btn' bindtap='toggleHavPhrase'>{{havPhrase ? '隐藏短语' : '显示短语'}}</view>
+
   <view class='question'>
     <view wx:for="{{readQuestion}}" wx:key="{{index}}">
       <text class='q_tit'>{{index+1}}、{{item.description}}</text>
@@ -48,7 +53,6 @@
       </view>
     </view>
   </van-dialog>
-
 
 
   <!-- 翻译弹窗 -->

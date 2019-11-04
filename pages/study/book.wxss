@@ -6,3 +6,6 @@
 .ul .li > view:nth-child(1){font-size: 24rpx; line-height: 24rpx; padding: 0 20rpx; min-width: 64rpx;overflow: hidden}
 .ul .li > view:nth-child(2){flex: 1; font-size: 32rpx;}
 .ul .li > view:nth-child(3){height: 40rpx;}
+
+.li_havdes text{display: block;}
+.li_havdes text:last-child{font-size: 22rpx;color: #999}

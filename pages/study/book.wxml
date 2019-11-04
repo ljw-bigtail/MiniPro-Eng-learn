@@ -25,7 +25,10 @@
      <view class="ul list">
         <view class="li van-hairline--bottom" wx:for="{{readTestList}}" wx:key="{{index}}" bindtap='openReadTest' data-index='{{index}}'>
             <view class="van-ellipsis">{{index + 1}}</view>
-            <view class="van-ellipsis">{{item.title}}</view>
+            <view class="van-ellipsis li_havdes">
+              <text>{{item.title}}</text>
+              <text>{{item.source}}</text>
+            </view>
             <view><van-icon name="arrow" size="20px"/></view>
         </view>
         <view class="li tips">已经到最底部了···</view>
