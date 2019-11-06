@@ -7,7 +7,8 @@
 
   <view  wx:if="{{readTest.description && readTest.description != ''}}">
     <!-- <view class='description zrd' wx:if="{{havDes}}">{{readTest.description}}</view> -->
-    <rich-text class='description zrd' wx:if="{{havDes}}">{{readTest.description}}</rich-text>
+    <rich-text nodes="{{readTest.description}}" class='description zrd' wx:if="{{havDes}}"></rich-text>
+
     <view class='simple_btn' bindtap='toggleDes'>{{havDes ? '隐藏描述' : '显示描述'}}</view>
   </view>
 
@@ -22,7 +23,7 @@
 
   <view  wx:if="{{readTest.zhContent && readTest.zhContent != ''}}">
     <!-- <view class='zhContent zrd' wx:if="{{havzhContent}}">{{readTest.zhContent}}</view> -->
-    <rich-text class='zhContent zrd' wx:if="{{havzhContent}}">{{readTest.zhContent}}</rich-text>
+    <rich-text nodes="{{readTest.zhContent}}" class='zhContent zrd' wx:if="{{havzhContent}}"></rich-text>
     <view class='simple_btn' bindtap='togglezhContent'>{{havzhContent ? '隐藏阅读辅导' : '显示阅读辅导'}}</view>
   </view>
 
