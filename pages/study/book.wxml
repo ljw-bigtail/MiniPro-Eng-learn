@@ -28,7 +28,7 @@
      <view class="ul list">
         <view class="li van-hairline--bottom" wx:for="{{readTestList}}" wx:key="{{index}}" bindtap='openReadTest' data-index='{{index}}'>
             <view class="van-ellipsis">{{index + 1}}</view>
-            <view class="van-ellipsis li_havdes">
+            <view class="li_havdes">
               <view class='van-ellipsis'>{{item.title}}</view>
               <view class='van-ellipsis'>{{item.source}}</view>
               <view class=''>{{item.description}}</view>
