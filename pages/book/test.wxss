@@ -42,3 +42,6 @@
 
 
 .simple_btn{text-align: right; text-decoration: underline; line-height: 32rpx; color: rgb(255, 46, 99); padding: 12rpx}
+
+.zrd{font-size: 24rpx;}
+/* .zrd{font-size: 24rpx; text-indent: 2em;} */

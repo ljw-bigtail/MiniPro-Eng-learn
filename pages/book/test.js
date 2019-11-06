@@ -31,7 +31,21 @@ Page({
     infoList_example: null,
     mp3List_example: null,
 
-    havPhrase: true
+    havPhrase: true,
+    havDes: false,
+    havzhContent: false,
+  },
+  togglezhContent: function () {
+    let that = this;
+    that.setData({
+      havzhContent: !that.data.havzhContent
+    })
+  },
+  toggleDes: function () {
+    let that = this;
+    that.setData({
+      havDes: !that.data.havDes
+    })
   },
   toggleHavPhrase: function(){
     let that = this;

@@ -4,6 +4,13 @@
 <view class="container">
   <view class='title'>{{readTest.title}}</view>
   <view class='source'>{{readTest.source}}</view>
+
+  <view  wx:if="{{readTest.description && readTest.description != ''}}">
+    <!-- <view class='description zrd' wx:if="{{havDes}}">{{readTest.description}}</view> -->
+    <rich-text class='description zrd' wx:if="{{havDes}}">{{readTest.description}}</rich-text>
+    <view class='simple_btn' bindtap='toggleDes'>{{havDes ? '隐藏描述' : '显示描述'}}</view>
+  </view>
+
   <!-- <rich-text class='content' nodes="{{readTest.enContent}}"></rich-text> -->
   <view class="card con" wx:if="{{havPhrase}}">
     <text wx:for="{{content}}" wx:key="{{index}}" bindtap='readExampleWord' data-type="0" data-i="{{index}}" class="{{item.cls}}">{{item.text}}</text>
@@ -12,6 +19,12 @@
     <text wx:for="{{content_no_phrase}}" wx:key="{{index}}" bindtap='readExampleWord' data-type="1" data-i="{{index}}" class="{{item.cls}}">{{item.text}}</text>
   </view>
   <view class='simple_btn' bindtap='toggleHavPhrase'>{{havPhrase ? '隐藏短语' : '显示短语'}}</view>
+
+  <view  wx:if="{{readTest.zhContent && readTest.zhContent != ''}}">
+    <!-- <view class='zhContent zrd' wx:if="{{havzhContent}}">{{readTest.zhContent}}</view> -->
+    <rich-text class='zhContent zrd' wx:if="{{havzhContent}}">{{readTest.zhContent}}</rich-text>
+    <view class='simple_btn' bindtap='togglezhContent'>{{havzhContent ? '隐藏阅读辅导' : '显示阅读辅导'}}</view>
+  </view>
 
   <view class='question'>
     <view wx:for="{{readQuestion}}" wx:key="{{index}}">
