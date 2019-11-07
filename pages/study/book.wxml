@@ -26,18 +26,28 @@
     </van-tab>
     <van-tab title="阅读理解">
      <view class="ul list">
-        <view class="li van-hairline--bottom" wx:for="{{readTestList}}" wx:key="{{index}}" bindtap='openReadTest' data-index='{{index}}'>
-            <view class="van-ellipsis">{{index + 1}}</view>
-            <view class="van-ellipsis li_havdes">
+        <view class="li van-hairline--bottom" wx:for="{{readTestList}}" wx:key="{{index}}">
+            <view class="van-ellipsis" bindtap='openReadTest' data-index='{{index}}'>{{index + 1}}</view>
+            <view class="van-ellipsis li_havdes" bindtap='openReadTest' data-index='{{index}}'>
               <view class='van-ellipsis'>{{item.title}}</view>
               <view class='van-ellipsis'>{{item.source}}</view>
-              <!-- <view class=''>{{item.description}}</view> -->
-              <rich-text nodes="{{item.description}}" class='zrd'></rich-text>
             </view>
-            <view><van-icon name="arrow" size="20px"/></view>
+            <view bindtap='dialogOpen' class='top_icon' data-index="{{index}}"><van-icon name="info-o" size="20px"/></view>
+            <view bindtap='openReadTest' data-index='{{index}}'><van-icon name="arrow" size="20px"/></view>
         </view>
         <view class="li tips">已经到最底部了···</view>
       </view>
     </van-tab>
   </van-tabs>
+
+  <van-dialog
+    use-slot
+    show="{{ show }}"
+    confirm-button-text = '关闭'
+    bind:close="dialogClose"
+  >
+    <view class="card scrollCard">
+      <rich-text nodes="{{description_val}}"></rich-text>
+    </view>
+  </van-dialog>
 </view>

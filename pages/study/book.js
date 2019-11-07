@@ -16,8 +16,24 @@ Page({
     readList: [],
     wordList: [],
     readTestList: [],
+    show: false
   },
-
+  dialogOpen: function (e) {
+    let that = this;
+    let i = e.currentTarget.dataset.index;
+    
+    this.setData({
+      show: true,
+      description_val: that.data.readTestList[i].description,
+    })
+    console.log(that.data)
+    return false
+  },
+  dialogClose: function () {
+    this.setData({
+      show: false
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
