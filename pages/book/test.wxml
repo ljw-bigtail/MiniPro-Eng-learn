@@ -7,7 +7,7 @@
 
   <view  wx:if="{{readTest.description && readTest.description != ''}}">
     <!-- <view class='description zrd' wx:if="{{havDes}}">{{readTest.description}}</view> -->
-    <rich-text nodes="{{readTest.description}}" class='description zrd' wx:if="{{havDes}}"></rich-text>
+    <rich-text space="emsp" nodes="{{readTest.description}}" class='description zrd' wx:if="{{havDes}}"></rich-text>
 
     <view class='simple_btn' bindtap='toggleDes'>{{havDes ? '隐藏描述' : '显示描述'}}</view>
   </view>
@@ -58,7 +58,7 @@
     confirm-button-text = '{{dialogState ? "返回" : "返回列表"}}'
     bind:close="dialogClose"
   >
-    <view class="card sp header">
+    <view class="card sp header scrollCard">
       <text class="title">{{numberTip}}</text>
       <view class="content" wx:for="{{answerList}}" wx:key="{{index}}">
         <view>问题{{item.i+1}}：{{item.q}}</view>

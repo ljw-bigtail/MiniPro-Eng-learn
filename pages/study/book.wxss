@@ -10,4 +10,4 @@
 .li_havdes view{font-size: 22rpx;color: #999}
 .li_havdes view:first-child{font-size: 32rpx;color: #252a34}
 
-.zrd{font-size: 22rpx;color: #999}
+.zrd{font-size: 22rpx;color: #999; height: 22rpx; line-height: 22rpx}

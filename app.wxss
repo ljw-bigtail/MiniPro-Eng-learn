@@ -6,3 +6,5 @@
 .ul .li > navigator{display: flex; align-items: center; justify-content: space-between; width: 100%}
 
 navigator.navigator-hover{background: transparent}
+
+.scrollCard{max-height: 60vh; overflow-y: auto!important}
