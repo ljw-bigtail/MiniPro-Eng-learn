@@ -116,14 +116,13 @@ Page({
       method: "POST",
       success: function (r1) {
         var cont = r1.data.content.result;
-        console.log(cont)
         if (!cont) {
           // 是否支付
           wx.showModal({
             content: '每单元单词教材需要支付' + preWordMony + '学币，是否支付？',
             showCancel: true,
             confirmText: '确定',
-            confirmColor: 'rgb(255, 46, 99)',
+            confirmColor: '#ff2e63',
             success: function (res) {
               if (res.confirm) {
                 // 去支付
@@ -188,7 +187,7 @@ Page({
             content: '每篇阅读需要支付' + preReadMony+'学币，是否支付？',
             showCancel: true,
             confirmText: '确定',
-            confirmColor: 'rgb(255, 46, 99)',
+            confirmColor: '#ff2e63',
             success: function (res) {
               if (res.confirm) {
                 // 去支付
@@ -237,7 +236,7 @@ Page({
             content: '每篇阅读理解需要支付' + preReadingMony + '学币，是否支付？',
             showCancel: true,
             confirmText: '确定',
-            confirmColor: 'rgb(255, 46, 99)',
+            confirmColor: '#ff2e63',
             success: function (res) {
               if (res.confirm) {
                 // 去支付
