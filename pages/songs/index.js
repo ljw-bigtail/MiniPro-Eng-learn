@@ -125,7 +125,7 @@ Page({
             // this.clickPlay()
         })
         music.onWaiting((res) => {
-            app.tools.toast('网络较慢，正在加载···')
+            // app.tools.toast('网络较慢，正在加载···')
         })
         music.onError((res) => {
             console.log(res)

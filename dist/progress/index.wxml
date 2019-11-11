@@ -9,8 +9,6 @@
       wx:if="{{ showPivot && getters.text(pivotText, percentage) }}"
       style="color: {{ textColor }}; background: {{ pivotColor ? pivotColor : inactive ? '#cacaca' : color }}"
       class="van-progress__pivot"
-    >
-      {{ getters.text(pivotText, percentage) }}
-    </view>
+    >{{ getters.text(pivotText, percentage) }}</view>
   </view>
 </view>
