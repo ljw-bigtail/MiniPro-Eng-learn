@@ -111,10 +111,12 @@ let tools = {
     this.toast('学币不足，请先充值···')
     setTimeout(function () {
       // TODO 跳转到充值页
-
-      // wx.redirectTo({
-      //   url: '/pages/user/index',
-      // })
+        wx.navigateTo({
+          url: '/pages/user/cash',
+          success: function(res) {},
+          fail: function(res) {},
+          complete: function(res) {},
+        })
     }, 1500)
   },
 }
