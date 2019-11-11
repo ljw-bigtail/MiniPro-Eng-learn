@@ -6,7 +6,7 @@
   </view>
   <view class='content'>
     <view class='center'>
-      <image src='/img/music-cd.jpg' class='animateRound {{!music_state ? "" : "animatePaused"}}' mode='widthFix'></image>
+      <image src='/img/music-cd.jpg' class='animateRound {{music_state ? "animatePaused" : ""}}' mode='widthFix'></image>
       <scroll-view class='lrc' scroll-y scroll-into-view="lrc_{{lrc_near}}" scroll-with-animation>
         <view class="lrc_line {{lrc_now == item.time ? 'active' : ''}}" wx:for="{{lrc_data}}" wx:key="index" id="lrc_{{item.time}}" >
           <text class="text" wx:for="{{item.data}}" bindtap='readExampleWord' data-i="{{item_i}}" wx:for-item="item_i" wx:for-index="i" wx:key="i">{{item_i}}</text>

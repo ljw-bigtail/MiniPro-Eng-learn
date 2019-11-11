@@ -149,8 +149,28 @@ Page({
   initBookCache: function(){
     const _this = this
     if (!app.globalData.userInfo || !app.globalData.userInfo.userid){
-      app.tools.toast('请登录···')
-      return
+        app.tools.toast('请登录···')
+        setTimeout(function () {
+            wx.navigateTo({
+                url: '/pages/user/index',
+                success: function (res) { },
+                fail: function (res) { },
+                complete: function (res) { },
+            })
+        }, 1000)
+        return
+    }
+    if (app.globalData.userInfo.is_real){
+        app.tools.toast('请实名认证后再使用···')
+        setTimeout(function(){
+            wx.navigateTo({
+                url: '/pages/user/index?toReal=1',
+                success: function(res) {},
+                fail: function(res) {},
+                complete: function(res) {},
+            })
+        }, 1000)
+        return
     }
     app.tools.request({
       url: 'user/learCfg?uid=' + app.globalData.userInfo.userid,

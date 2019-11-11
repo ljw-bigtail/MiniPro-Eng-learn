@@ -1,6 +1,7 @@
 // pages/songs/index.js
 const app = getApp()
-let music;
+let music = wx.createInnerAudioContext()
+
 let lrc = {},
     lrc_data = [],
     update_timer_interval = 1000,
@@ -35,6 +36,12 @@ Page({
         const _this = this
         lrc_data = []
         // 播放音乐
+        _this.setData({
+            musicPercent: 0,
+            music_state: true,
+            lrc_near: 0,
+            lrc_now: 0,
+        })
         app.tools.request({
             url: 'media/' + options.id,
             success: function(r5) {
@@ -79,7 +86,6 @@ Page({
     },
     setSong: function() {
         const _this = this
-        music = wx.createInnerAudioContext()
         if (wx.setInnerAudioOption) {
             wx.setInnerAudioOption({
                 obeyMuteSwitch: false,
@@ -160,7 +166,7 @@ Page({
      */
     onShow: function() {
         if (screenClose == 1) {
-            this.clickPlay()
+            // this.clickPlay()
         }
     },
 
@@ -180,12 +186,7 @@ Page({
     onUnload: function() {
         // 初始化
         music.stop();
-        this.setData({
-            musicPercent: 0,
-            music_state: true,
-            lrc_near: 0,
-            lrc_now: 0,
-        })
+        music.destroy();
     },
 
     //点击例句中的单词，显示单词
