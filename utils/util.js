@@ -111,11 +111,8 @@ let tools = {
       // TODO 跳转到充值页
         wx.navigateTo({
           url: '/pages/user/cash',
-          success: function(res) {},
-          fail: function(res) {},
-          complete: function(res) {},
         })
-    }, 1500)
+    }, 1000)
   },
 }
 

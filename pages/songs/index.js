@@ -55,7 +55,7 @@ Page({
         });
         // 歌词
         app.tools.request({
-            url: 'song/lyric?id=' + options.id, // fdid => id
+            url: 'song/lyric?id=' + options.fdid,
             method: "POST",
             success: function(r5) {
                 if (r5.data.content && r5.data.content.length > 0) {

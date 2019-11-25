@@ -2,7 +2,7 @@
 <view class="container">
   <view class="card header">
     <!-- 标题 -->
-    <text class="title">{{title}}</text>
+    <text class="title">{{title || ''}}</text>
   </view>
   <!-- 例句 -->
   <view class="card con" wx:if="{{havPhrase}}">

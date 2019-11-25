@@ -128,6 +128,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        this.setData({
+            urlFrom: options.urlFrom,
+            urlFromId: options.id
+        })
         if (options.referee){
             this.setData({
                 referee: options.referee
@@ -168,6 +172,11 @@ Page({
                 app.globalData.userInfo.userid = res.r3.content.result.id;
                 app.globalData.userInfo.unionid = res.r3.content.result.unionid;
                 app.globalData.userInfo.is_real = res.r3.content.result.real == 0;
+                if (_this.data.urlFrom == 'reads' || _this.data.urlFrom == 'test'){
+                    wx.reLaunch({
+                        url: '/pages/book/' + _this.data.urlFrom + '?id=' + _this.data.urlFromId,
+                    })
+                }
             },
             fail: function(res) {
                 wx.showToast({

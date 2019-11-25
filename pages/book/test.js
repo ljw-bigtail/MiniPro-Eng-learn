@@ -108,15 +108,8 @@ Page({
         this.setData({
             readingId: options.id.trim()
         });
-        const _this = this
-        _this.judgingLogin()
-        _this.isPay(function () {
-            _this.initReadTest(_this.data.readingId)
-            _this.initReadTestQuestion(_this.data.readingId)
-            _this.initLast()
-        })
+        this.judgingLogin()
     },
-
     initLast: function() {
         const _this = this
         app.tools.request({
@@ -133,11 +126,12 @@ Page({
         });
     },
     judgingLogin: function () {
+        const _this = this
         if (!app.globalData.userInfo || !app.globalData.userInfo.userid) {
             app.tools.toast('请登录···')
             setTimeout(function () {
                 wx.navigateTo({
-                    url: '/pages/user/index',
+                    url: '/pages/user/index?urlFrom=test&id=' + _this.data.readingId,
                 })
             }, 600)
             return
@@ -146,68 +140,75 @@ Page({
             app.tools.toast('请实名认证后再使用···')
             setTimeout(function () {
                 wx.navigateTo({
-                    url: '/pages/user/index?toReal=1',
+                    url: '/pages/user/index?toReal=1&urlFrom=test&id=' + _this.data.readingId,
                 })
             }, 600)
             return
         }
-    },
-    isPay: function (callback){
-        const _this = this
+        // 付费
         app.tools.request({
-            url: 'reading/checPayed?readingId=' + _this.data.readingId,
+            url: 'reading/getPayMoney',
             method: "POST",
-            success: function (r1) {
-                if (!r1.data.content.result) {
-                    // 是否支付
-                    wx.showModal({
-                        content: '每篇阅读理解需要支付' + preReadingMony + '学币，是否支付？',
-                        showCancel: true,
-                        confirmText: '确定',
-                        confirmColor: '#ff2e63',
-                        success: function (res) {
-                            if (res.confirm) {
-                                // 去支付
-                                _this.enoughBalance(function () {
-                                    app.tools.request({
-                                        url: 'reading/pay?readingId=' + _this.data.readingId,
-                                        method: "POST",
-                                        success: function (r2) {
-                                            if (r2.data.content) {
-                                                // 支付成功了
-                                                callback && callback()
-                                            } else {
-                                                // 支付异常
-                                                app.tools.toast('支付失败，请联系客服···')
+            success: function (r3) {
+                var preReadingMony = r3.data.content
+                app.tools.request({
+                    url: 'reading/checPayed?readingId=' + _this.data.readingId,
+                    method: "POST",
+                    success: function (r1) {
+                        if (!r1.data.content.result) {
+                            // 是否支付
+                            wx.showModal({
+                                content: '每篇阅读理解需要支付' + preReadingMony + '学币，是否支付？',
+                                showCancel: true,
+                                confirmText: '确定',
+                                confirmColor: '#ff2e63',
+                                success: function (res) {
+                                    if (res.confirm) {
+                                        // 去支付
+                                        app.tools.request({
+                                            url: 'user/wallet',
+                                            success: function (r1) {
+                                                var cont = r1.data.content;
+                                                if (cont.code == "S") {
+                                                    if (cont.result.balance < 1) {
+                                                        // 去充值
+                                                        app.tools.goToDeposit()
+                                                    } else {
+                                                        // 付款
+                                                        app.tools.request({
+                                                            url: 'reading/pay?readingId=' + _this.data.readingId,
+                                                            method: "POST",
+                                                            success: function (r2) {
+                                                                if (r2.data.content) {
+                                                                    // 支付成功了
+                                                                    _this.initReadTest()
+                                                                    _this.initReadTestQuestion()
+                                                                    _this.initLast()
+                                                                } else {
+                                                                    // 支付异常
+                                                                    app.tools.toast('支付失败，请联系客服···')
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }
                                             }
-                                        }
-                                    });
-                                });
-                            }
+                                        });
+                                    } else if (res.cancel) {
+                                        wx.reLaunch({
+                                            url: '/pages/index/index',
+                                        })
+                                    }
+                                }
+                            })
+                        } else {
+                            // 已经支付
+                            _this.initReadTest()
+                            _this.initReadTestQuestion()
+                            _this.initLast()
                         }
-                    })
-                } else {
-                    // 已经支付
-                    callback && callback()
-                }
-            }
-        })
-    },
-    enoughBalance: function (callback) {
-        const _this = this;
-        app.tools.request({
-            url: 'user/wallet',
-            success: function (r1) {
-                var cont = r1.data.content;
-                if (cont.code == "S") {
-                    if (cont.result.balance < 1) {
-                        // 去充值
-                        app.tools.goToDeposit()
-                    } else {
-                        // 付款
-                        callback && callback()
                     }
-                }
+                })
             }
         });
     },
@@ -246,9 +247,10 @@ Page({
         });
     },
 
-    initReadTest: function(id) {
+    initReadTest: function() {
         // 8A2E96A9B05AAB65D8034B396280B1B2
         const _this = this
+        var id = _this.data.readingId
         wx.getStorage({
             key: 'readTestCache',
             success: (res) => {
@@ -314,9 +316,10 @@ Page({
             },
         })
     },
-    initReadTestQuestion: function(id) {
+    initReadTestQuestion: function() {
         // 8A2E96A9B05AAB65D8034B396280B1B2
         const _this = this
+        var id = _this.data.readingId
         app.tools.request({
             url: 'reading/getQuestions?readingId=' + id,
             method: "POST",
