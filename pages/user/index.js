@@ -177,6 +177,11 @@ Page({
                         url: '/pages/book/' + _this.data.urlFrom + '?id=' + _this.data.urlFromId,
                     })
                 }
+                if (_this.data.urlFrom == 'words' || _this.data.urlFrom == 'test') {
+                    wx.reLaunch({
+                        url: '/pages/book/words?word=' + _this.data.urlFromId,
+                    })
+                }
             },
             fail: function(res) {
                 wx.showToast({

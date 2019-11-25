@@ -26,18 +26,18 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        const _this = this
-        _this.judgingLogin()
-        _this.isPay(function(){
-            _this.initWord(options.word.trim())
-        })
+        this.setData({
+            word: options.word.trim()
+        });
+        this.judgingLogin()
     },
     judgingLogin: function() {
+        const _this = this
         if (!app.globalData.userInfo || !app.globalData.userInfo.userid) {
             app.tools.toast('请登录···')
             setTimeout(function() {
                 wx.navigateTo({
-                    url: '/pages/user/index',
+                    url: '/pages/user/index?urlFrom=words&id=' + _this.data.word,
                 })
             }, 600)
             return
@@ -46,18 +46,93 @@ Page({
             app.tools.toast('请实名认证后再使用···')
             setTimeout(function() {
                 wx.navigateTo({
-                    url: '/pages/user/index?toReal=1',
+                    url: '/pages/user/index?toReal=1&urlFrom=words&id=' + _this.data.word,
                 })
             }, 600)
             return
         }
+        // 付费
+        let _url = ''
+        if (!app.globalData.bookInfo || !app.globalData.bookInfo.grade || !app.globalData.bookInfo.bid || !app.globalData.bookInfo.chapter){
+            app.tools.toast('请选择教材后再进入学习···')
+            setTimeout(function(){
+                wx.reLaunch({
+                    url: '/pages/study/index',
+                })
+            },1000)
+            return
+        }
+        _url = "?grade=" + app.globalData.bookInfo.grade + "&bid=" + app.globalData.bookInfo.bid + "&chapter=" + app.globalData.bookInfo.chapter;
+        app.tools.request({
+            url: 'word/getPayMoney',
+            method: "POST",
+            success: function (r3) {
+                var preWordMony = r3.data.content
+                app.tools.request({
+                    url: 'word/checkWithGBC' + _url,
+                    method: "POST",
+                    success: function (r1) {
+                        var cont = r1.data.content.result;
+                        if (!cont) {
+                            // 是否支付
+                            wx.showModal({
+                                content: '每单元单词教材需要支付' + preWordMony + '学币，是否支付？',
+                                showCancel: true,
+                                confirmText: '确定',
+                                confirmColor: '#ff2e63',
+                                success: function (res) {
+                                    if (res.confirm) {
+                                        // 去支付
+                                        app.tools.request({
+                                            url: 'user/wallet',
+                                            success: function (r1) {
+                                                var cont = r1.data.content;
+                                                if (cont.code == "S") {
+                                                    if (cont.result.balance < 1) {
+                                                        // 去充值
+                                                        app.tools.goToDeposit()
+                                                    } else {
+                                                        // 付款
+                                                        app.tools.request({
+                                                            url: 'word/payWithGBC' + _url,
+                                                            method: "POST",
+                                                            success: function (r1) {
+                                                                var cont = r1.data.content;
+                                                                if (cont) {
+                                                                    // 支付成功了
+                                                                    _this.initWord()
+                                                                } else {
+                                                                    // 支付异常
+                                                                    app.tools.toast('支付失败，请联系客服···')
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    } else if (res.cancel) {
+                                        wx.reLaunch({
+                                            url: '/pages/index/index',
+                                        })
+                                    }
+                                }
+                            })
+                        } else {
+                            _this.initWord()
+                        }
+                    }
+                })
+            }
+        });
     },
-    initWord: function(word) {
+    initWord: function () {
         const _this = this
+        var word = _this.data.word
         app.tools.request({
             url: 'word/iciba?word=' + word.replace(/\\ /gm, '%20'),
             method: "POST",
-            success: function(r) {
+            success: function (r) {
                 let data = r.data.content.result
                 let sent = []
                 if (data.sent && data.sent.length > 0) {
@@ -76,70 +151,10 @@ Page({
                     sent = []
                 }
                 _this.setData({
-                    word: word,
                     infoList: data.ponses,
                     mp3List: data.prons,
                     exampleList: sent
                 })
-            }
-        });
-    },
-    isPay: function (callback){
-        const _this = this
-        let _url = "?grade=" + app.globalData.bookInfo.grade + "&bid=" + app.globalData.bookInfo.bid + "&chapter=" + app.globalData.bookInfo.chapter;
-        app.tools.request({
-            url: 'word/checkWithGBC' + _url,
-            method: "POST",
-            success: function (r1) {
-                var cont = r1.data.content.result;
-                if (!cont) {
-                    // 是否支付
-                    wx.showModal({
-                        content: '每单元单词教材需要支付' + preWordMony + '学币，是否支付？',
-                        showCancel: true,
-                        confirmText: '确定',
-                        confirmColor: '#ff2e63',
-                        success: function (res) {
-                            if (res.confirm) {
-                                // 去支付
-                                _this.enoughBalanceWord(_url, callback);
-                            }
-                        }
-                    })
-                } else {
-                    callback && callback()
-                }
-            }
-        })
-    },
-    enoughBalanceWord: function (_url, callback) {
-        const _this = this;
-        app.tools.request({
-            url: 'user/wallet',
-            success: function (r1) {
-                var cont = r1.data.content;
-                if (cont.code == "S") {
-                    if (cont.result.balance < 1) {
-                        // 去充值
-                        app.tools.goToDeposit()
-                    } else {
-                        // 付款
-                        app.tools.request({
-                            url: 'word/payWithGBC' + _url,
-                            method: "POST",
-                            success: function (r1) {
-                                var cont = r1.data.content;
-                                if (cont) {
-                                    // 支付成功了
-                                    callback && callback()
-                                } else {
-                                    // 支付异常
-                                    app.tools.toast('支付失败，请联系客服···')
-                                }
-                            }
-                        });
-                    }
-                }
             }
         });
     },
