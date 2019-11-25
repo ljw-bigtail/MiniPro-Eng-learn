@@ -51,7 +51,6 @@ let tools = {
         }else{
           _this.toast('系统发生异常，请联系客服')
         }
-        console.log(res)
       },
       complete: function (res){
         opt.complete && opt.complete(res)
@@ -68,7 +67,6 @@ let tools = {
             wx.showLoading({
               title: '正在登陆···'
             })
-            // console.log()
             // referee
             _this.request({
               url: 'login',

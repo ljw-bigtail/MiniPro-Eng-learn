@@ -160,7 +160,6 @@ Page({
             }
         })
         this.setBook(data)
-        // console.log(this.data.book)
     },
 
     /**
@@ -194,7 +193,6 @@ Page({
             url: 'user/learCfg?uid=' + app.globalData.userInfo.userid,
             method: "POST",
             success: function(r3) {
-                console.log(r3)
                 // TODO 接口需求：当前所选择的教材,回填到data里
                 let data = {
                     grade: r3.data.content.gradeName, // 年级

@@ -81,7 +81,6 @@ Page({
                     mp3List: data.prons,
                     exampleList: sent
                 })
-                console.log(_this.data)
             }
         });
     },

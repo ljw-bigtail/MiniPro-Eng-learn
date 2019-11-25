@@ -64,7 +64,6 @@ Page({
                             },
                             fail: function(e) {
                                 app.tools.toast('数据异常，请联系客服···')
-                                console.log(e);
                             }
                         })
                     }
@@ -122,7 +121,6 @@ Page({
     },
     bindGetUserInfo: function() {
         app.tools.isLogin(function() {
-            console.log(1)
         })
     },
 

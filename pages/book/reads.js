@@ -54,9 +54,8 @@ Page({
     isPay: function (callback) {
         // 付费
         const _this = this
-        let id = e.currentTarget.dataset.id;
         app.tools.request({
-            url: 'artical/checPayed?aid=' + id,
+            url: 'artical/checPayed?aid=' + _this.data.readingId,
             method: "POST",
             success: function (r1) {
                 if (!r1.data.content.result) {
@@ -71,7 +70,7 @@ Page({
                                 // 去支付
                                 _this.enoughBalance(function () {
                                     app.tools.request({
-                                        url: 'artical/pay?aid=' + id,
+                                        url: 'artical/pay?aid=' + _this.data.readingId,
                                         method: "POST",
                                         success: function (r2) {
                                             if (r2.data.content) {
@@ -130,7 +129,6 @@ Page({
                         _words = _words.replace(reg, "@#" + e.reg + "@#")
                     })
                     let endWord = []
-                    // console.log(_words)
                     _words.split("@#").map(function(e) {
                         // 短语
                         var state = undefined
@@ -171,7 +169,6 @@ Page({
                         })
                     })
                     // rst.content = _words;
-                    // console.log(endWord);
                     _this.setData({
                         content_no_phrase: endWord_no,
                         content: endWord,
@@ -217,7 +214,6 @@ Page({
         }
         let w = data.text
         // if (data.cls != "bloder"){return}
-        // console.log(e.currentTarget.dataset.i, data)
         if (w) {
             if (data.cls == "bloder") {
                 // 短语查询

@@ -106,15 +106,16 @@ Page({
             let lrc_now_time = Math.ceil(music.currentTime * 1000),
                 lrc_now = 0,
                 lrc_near = 0
-
-            _this.data.lrc_data.map(function(item, index) {
-                if (lrc_now_time > item.time && lrc_now_time < lrc_data[index + 1].time) {
-                    if (index > 3) {
-                        lrc_near = _this.data.lrc_data[index - 3].time
+            if (_this.data.lrc_data[0].data[0] != "暂无歌词···"){
+                _this.data.lrc_data.map(function (item, index) {
+                    if (lrc_now_time > item.time && lrc_now_time < lrc_data[index + 1].time) {
+                        if (index > 3) {
+                            lrc_near = _this.data.lrc_data[index - 3].time
+                        }
+                        lrc_now = item.time
                     }
-                    lrc_now = item.time
-                }
-            })
+                })
+            }
             if (lrc_near != _this.data.lrc_near) {
                 _this.setData({
                     lrc_near: lrc_near, // 歌词

@@ -26,7 +26,6 @@ Page({
       show: true,
       description_val: that.data.readTestList[i].description,
     })
-    console.log(that.data)
     return false
   },
   dialogClose: function () {

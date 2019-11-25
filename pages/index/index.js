@@ -211,7 +211,6 @@ Page({
     this.setData({ current: e.detail.current })
   },
   onChange: function(e){
-    console.log(e.detail.index)
   },
   openTabbar: function (e) {
     app.tabbarNavTo(e.detail)

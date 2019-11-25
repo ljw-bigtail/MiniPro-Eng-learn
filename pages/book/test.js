@@ -154,10 +154,8 @@ Page({
     },
     isPay: function (callback){
         const _this = this
-        let index = e.currentTarget.dataset.index;
-        let data = _this.data.readTestList[index];
         app.tools.request({
-            url: 'reading/checPayed?readingId=' + data.id,
+            url: 'reading/checPayed?readingId=' + _this.data.readingId,
             method: "POST",
             success: function (r1) {
                 if (!r1.data.content.result) {
@@ -172,7 +170,7 @@ Page({
                                 // 去支付
                                 _this.enoughBalance(function () {
                                     app.tools.request({
-                                        url: 'reading/pay?readingId=' + data.id,
+                                        url: 'reading/pay?readingId=' + _this.data.readingId,
                                         method: "POST",
                                         success: function (r2) {
                                             if (r2.data.content) {
@@ -371,7 +369,6 @@ Page({
                     answerList: answerList,
                     dialogState: false
                 });
-                // console.log(_this.data)
             }
         });
     },

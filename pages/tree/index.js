@@ -24,7 +24,6 @@ Page({
     app.tools.request({
       url: 'user/checkRefereeCode?referee=' + code,
       success: function (res) {
-        console.log(res)
         if (res.data.content == true) {
           _this.setData({
             codeInputShow: false
@@ -38,7 +37,6 @@ Page({
     });
   },
   initTree: function(){
-    console.log('tree')
   },
   /**
    * 生命周期函数--监听页面加载

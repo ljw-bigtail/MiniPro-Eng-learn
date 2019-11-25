@@ -14,13 +14,11 @@ Page({
         scroll_top: 0
     },
     onChange(event) {
-        console.log(event.detail)
         this.setData({
             activeName: event.detail
         });
     },
     onChange1(event) {
-        console.log(event.detail)
         this.setData({
             activeName: event.detail
         });
@@ -29,14 +27,12 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        console.log(app.globalData.userInfo)
         const _this = this
         var uid = app.globalData.userInfo.userid;
         app.tools.request({
             url: 'user/getChildren?isTree=true&pid=' + uid,
             success: function(r5) {
                 if (r5.data.content && r5.data.content.length > 0) {
-                    console.log(r5.data.content)
                     _this.setData({
                         tree: r5.data.content
                     })
