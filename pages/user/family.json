@@ -1,5 +1,6 @@
 {
-  "usingComponents": {
+    "navigationBarTitleText": "学族",
+    "usingComponents": {
     "van-collapse-item": "../../dist/collapse-item/index",
     "van-collapse": "../../dist/collapse/index"
   }

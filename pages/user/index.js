@@ -146,6 +146,12 @@ Page({
                 user_name: app.globalData.userInfo.nickName,
                 loginShow: false
             })
+            if (app.globalData.userInfo.is_real) {
+                app.tools.toast('请实名认证后再使用···')
+                this.setData({
+                    show: true
+                })
+            }
         }
     },
     login: function() {

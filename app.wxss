@@ -1,6 +1,8 @@
 /**app.wxss**/
 @import "/dist/common/index.wxss";
 
+view,text{font-family: 'Times New Roman', 'Microsoft YaHei';}
+
 .ul{display: block}
 .ul .li,
 .ul .li > navigator{display: flex; align-items: center; justify-content: space-between; width: 100%}

@@ -1,5 +1,6 @@
 {
-  "usingComponents": {
+    "navigationBarTitleText": "阅读理解",
+    "usingComponents": {
     "van-icon": "../../dist/icon/index",
     "van-button": "../../dist/button/index",
     "van-dialog": "../../dist/dialog/index",

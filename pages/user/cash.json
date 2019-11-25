@@ -1,5 +1,6 @@
 {
-  "usingComponents": {
+    "navigationBarTitleText": "学币",
+    "usingComponents": {
     "van-icon": "../../dist/icon/index",
     "van-dialog": "../../dist/dialog/index"
   }

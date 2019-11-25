@@ -117,7 +117,7 @@ Page({
     let id = e.currentTarget.dataset.id;
     let fdid = e.currentTarget.dataset.fdid;
     wx.navigateTo({
-      url: '/pages/songs/index?id=' + id + '&fdid=' + fdid
+      url: '/pages/songs/index?id=' + id // + '&fdid=' + fdid
     });
   },
   openSongWord: function(e){
