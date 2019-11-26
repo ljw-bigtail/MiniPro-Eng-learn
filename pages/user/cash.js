@@ -57,6 +57,7 @@ Page({
         })
     },
     cashIn: function(e) {
+        const _this = this
         var num = e.currentTarget.dataset.num
         var uid = app.globalData.userInfo.userid;
         app.tools.request({
@@ -83,6 +84,9 @@ Page({
                                             url: 'recharge/complete?recordId=' + r1_result.recordId + "&beforeValue=" + r1_result.beforeValue,
                                             success: function(r4) {
                                                 app.tools.toast('充值成功···')
+                                                _this.dialogClose()
+                                                _this.initWallet()
+                                                _this.initWalletRecords()
                                             },
                                             'fail': function(res) {
                                                 app.tools.toast('支付失败，请联系客服···')

@@ -136,6 +136,7 @@ Page({
             }, 600)
             return
         }
+        console.log(app.globalData.userInfo)
         if (app.globalData.userInfo.is_real) {
             app.tools.toast('请实名认证后再使用···')
             setTimeout(function () {

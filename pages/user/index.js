@@ -58,6 +58,7 @@ Page({
                             },
                             success: function(r3) {
                                 app.tools.toast('保存成功···')
+                                app.globalData.userInfo.is_real = false;
                                 that.setData({
                                     show: false
                                 })
