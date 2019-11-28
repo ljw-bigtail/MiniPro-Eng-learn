@@ -247,7 +247,6 @@ Page({
             }
         });
     },
-
     initReadTest: function() {
         // 8A2E96A9B05AAB65D8034B396280B1B2
         const _this = this
@@ -313,7 +312,10 @@ Page({
                 }
             },
             fail: () => {
-                app.tools.toast('读取失败，请联系客服···')
+                app.tools.toast('数据暂无，请进入学习中心···')
+                wx.navigateTo({
+                    url: '/pages/study/index',
+                })
             },
         })
     },
@@ -436,6 +438,9 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '英语邦-学习中心',
+            path: '/pages/study/index'
+        }
     }
 })

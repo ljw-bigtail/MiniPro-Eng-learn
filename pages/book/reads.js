@@ -292,6 +292,9 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '英语邦-学习中心',
+            path: '/pages/study/index'
+        }
     }
 })
