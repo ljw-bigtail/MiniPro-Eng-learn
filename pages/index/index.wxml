@@ -26,7 +26,7 @@
         <view class="li tips" wx:else>已经到最底部了···</view>
       </view>
     </van-tab>
-    <van-tab title="学员动态">
+    <van-tab title="学习天地">
      <view class="ul newsList">
         <view class="li van-hairline--bottom" wx:for="{{newsList}}" wx:key="index" data-id="{{item.id}}" bindtap="openNews">
           <!-- <navigator url="/pages/news/index?id={{item.id}}"> -->
